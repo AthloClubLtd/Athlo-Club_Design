@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { getCurrentSession } from "@/lib/session";
 import AudienceToggle from "@/components/audience-toggle";
 import MobileNav from "@/components/mobile-nav";
+import NavAuthActions from "@/components/nav-auth-actions";
 
 const links = [
   { href: "/discover", label: "Discover" },
@@ -11,9 +11,7 @@ const links = [
   { href: "/blog", label: "Blog" },
 ];
 
-export default async function Nav() {
-  const session = await getCurrentSession();
-
+export default function Nav() {
   return (
     <header className="relative z-50 border-b border-white/5 bg-navy/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
@@ -38,30 +36,10 @@ export default async function Nav() {
 
         <div className="hidden items-center gap-4 md:flex">
           <AudienceToggle />
-          {session ? (
-            <Link
-              href="/app"
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-lime text-sm font-bold text-navy"
-              title={session.name ?? "Your account"}
-            >
-              {(session.name ?? "A").slice(0, 1).toUpperCase()}
-            </Link>
-          ) : (
-            <div className="flex items-center gap-3">
-              <Link href="/login" className="text-sm font-semibold text-white hover:text-lime">
-                Log in
-              </Link>
-              <Link
-                href="/signup"
-                className="rounded-full bg-lime px-4 py-2 text-sm font-bold text-navy transition-colors hover:bg-lime-600"
-              >
-                Sign up
-              </Link>
-            </div>
-          )}
+          <NavAuthActions />
         </div>
 
-        <MobileNav isSignedIn={Boolean(session)} />
+        <MobileNav />
       </div>
     </header>
   );

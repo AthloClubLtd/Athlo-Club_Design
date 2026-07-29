@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import AudienceToggle from "@/components/audience-toggle";
 
 const links = [
@@ -12,12 +13,10 @@ const links = [
   { href: "/blog", label: "Blog" },
 ];
 
-export default function MobileNav({
-  isSignedIn,
-}: {
-  isSignedIn: boolean;
-}) {
+export default function MobileNav() {
   const [open, setOpen] = useState(false);
+  const { status } = useSession();
+  const isSignedIn = status === "authenticated";
 
   return (
     <div className="md:hidden">
