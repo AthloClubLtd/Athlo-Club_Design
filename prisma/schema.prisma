@@ -1,0 +1,314 @@
+// Athlo Club — Prisma schema
+//
+// Auth.js (NextAuth v5) uses `Athlete` as its user model rather than a
+// separate `User` table, since Athlete already carries every field an
+// Auth.js session needs (id, email, name, image via avatarUrl). `Account`
+// and `Session` reference Athlete via `athleteId` instead of the adapter's
+// default `userId` — `lib/auth.ts` wires a thin custom adapter around
+// `@auth/prisma-adapter`'s `PrismaAdapter` to read/write those field names.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum ClubType {
+  SOCIAL
+  BUSINESS
+  FEDERATION
+}
+
+enum ClubRole {
+  OWNER
+  ORGANISER
+  MEMBER
+}
+
+enum AthleteRole {
+  ATHLETE
+  ADMIN
+}
+
+enum Sport {
+  WEIGHTLIFTING
+  POWERLIFTING
+  CROSSFIT
+  FITNESS_RACING
+}
+
+enum EventFormat {
+  VIRTUAL
+  IN_PERSON
+  HYBRID
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+}
+
+enum AffiliationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum PremiumStatus {
+  FREE
+  ACTIVE
+  PAST_DUE
+}
+
+enum StripeOnboardingStatus {
+  NONE
+  PENDING
+  COMPLETE
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  REFUNDED
+}
+
+// ---------------------------------------------------------------------------
+// Core domain models
+// ---------------------------------------------------------------------------
+
+model Athlete {
+  id               String        @id @default(cuid())
+  email            String        @unique
+  handle           String        @unique
+  name             String
+  avatarUrl        String?
+  bio              String?
+  location         String?
+  sports           Sport[]
+  role             AthleteRole   @default(ATHLETE)
+  premiumStatus    PremiumStatus @default(FREE)
+  stripeCustomerId String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  records                    PersonalRecord[]
+  entries                    CompetitionEntry[]
+  memberships                ClubMembership[]
+  ownedClubs                 Club[]               @relation("ClubOwner")
+  orders                     Order[]
+  decidedAffiliationRequests AffiliationRequest[]  @relation("AffiliationDecidedBy")
+
+  accounts Account[]
+  sessions Session[]
+
+  @@map("athletes")
+}
+
+model Club {
+  id                     String                  @id @default(cuid())
+  slug                   String                  @unique
+  name                   String
+  type                   ClubType
+  description            String?
+  logoUrl                String?
+  location               String?
+  sports                 Sport[]
+  ownerId                String
+  owner                  Athlete                 @relation("ClubOwner", fields: [ownerId], references: [id])
+  federationId           String?
+  federation             Club?                   @relation("ClubFederation", fields: [federationId], references: [id])
+  affiliatedClubs        Club[]                  @relation("ClubFederation")
+  stripeAccountId        String?
+  stripeOnboardingStatus StripeOnboardingStatus  @default(NONE)
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+
+  members             ClubMembership[]
+  events               Event[]
+  affiliationRequests  AffiliationRequest[] @relation("AffiliationRequestingClub")
+  federationRequests   AffiliationRequest[] @relation("AffiliationFederation")
+
+  @@map("clubs")
+}
+
+model ClubMembership {
+  id        String   @id @default(cuid())
+  clubId    String
+  club      Club     @relation(fields: [clubId], references: [id])
+  athleteId String
+  athlete   Athlete  @relation(fields: [athleteId], references: [id])
+  role      ClubRole @default(MEMBER)
+  joinedAt  DateTime @default(now())
+
+  @@unique([clubId, athleteId])
+  @@map("club_memberships")
+}
+
+model AffiliationRequest {
+  id             String            @id @default(cuid())
+  clubId         String
+  club           Club              @relation("AffiliationRequestingClub", fields: [clubId], references: [id])
+  federationId   String
+  federationClub Club              @relation("AffiliationFederation", fields: [federationId], references: [id])
+  status         AffiliationStatus @default(PENDING)
+  requestedAt    DateTime          @default(now())
+  decidedAt      DateTime?
+  decidedById    String?
+  decidedBy      Athlete?          @relation("AffiliationDecidedBy", fields: [decidedById], references: [id])
+
+  @@map("affiliation_requests")
+}
+
+model Event {
+  id          String      @id @default(cuid())
+  slug        String      @unique
+  clubId      String
+  club        Club        @relation(fields: [clubId], references: [id])
+  title       String
+  description String?
+  sport       Sport
+  format      EventFormat
+  venue       String?
+  virtualUrl  String?
+  startDate   DateTime
+  endDate     DateTime
+  status      EventStatus @default(DRAFT)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  ticketTypes  TicketType[]
+  competitions Competition[]
+  orders       Order[]
+
+  @@map("events")
+}
+
+model TicketType {
+  id         String  @id @default(cuid())
+  eventId    String
+  event      Event   @relation(fields: [eventId], references: [id])
+  name       String
+  priceCents Int
+  currency   String  @default("GBP")
+  capacity   Int?
+
+  orders Order[]
+
+  @@map("ticket_types")
+}
+
+model Competition {
+  id                   String    @id @default(cuid())
+  eventId              String
+  event                Event     @relation(fields: [eventId], references: [id])
+  name                 String
+  sport                Sport
+  discipline           String
+  scoringConfig        Json?
+  registrationOpensAt  DateTime?
+  registrationClosesAt DateTime?
+  isSanctioned         Boolean   @default(false)
+
+  entries CompetitionEntry[]
+
+  @@map("competitions")
+}
+
+model CompetitionEntry {
+  id            String      @id @default(cuid())
+  competitionId String
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  athleteId     String
+  athlete       Athlete     @relation(fields: [athleteId], references: [id])
+  division      String?
+  resultsJson   Json?
+  placement     Int?
+  createdAt     DateTime    @default(now())
+
+  @@map("competition_entries")
+}
+
+model PersonalRecord {
+  id         String   @id @default(cuid())
+  athleteId  String
+  athlete    Athlete  @relation(fields: [athleteId], references: [id])
+  sport      Sport
+  discipline String
+  value      Float
+  unit       String
+  achievedAt DateTime
+  verified   Boolean  @default(false)
+
+  @@map("personal_records")
+}
+
+model Order {
+  id                    String      @id @default(cuid())
+  eventId               String?
+  event                 Event?      @relation(fields: [eventId], references: [id])
+  ticketTypeId          String?
+  ticketType            TicketType? @relation(fields: [ticketTypeId], references: [id])
+  athleteId             String
+  athlete               Athlete     @relation(fields: [athleteId], references: [id])
+  amountTotalCents      Int
+  applicationFeeCents   Int
+  stripePaymentIntentId String?
+  status                OrderStatus @default(PENDING)
+  createdAt             DateTime    @default(now())
+
+  @@map("orders")
+}
+
+// ---------------------------------------------------------------------------
+// Auth.js (NextAuth v5) models — Prisma adapter shape, keyed to Athlete.
+// See the schema comment at the top of this file for how the adapter is
+// wired to a model named `Athlete` instead of the adapter's default `User`.
+// ---------------------------------------------------------------------------
+
+model Account {
+  id                String  @id @default(cuid())
+  athleteId         String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  athlete Athlete @relation(fields: [athleteId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  athleteId    String
+  expires      DateTime
+
+  athlete Athlete @relation(fields: [athleteId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
