@@ -1,10 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "../styles/tokens.css";
 
 :root {
   --background: #0f1b22;
   --foreground: #ffffff;
+
+  /* Bind the v1 brand tokens to the actual loaded webfonts (see layout.tsx).
+     Overrides the string fallbacks in tokens.css; nothing else in that
+     file is touched here so it stays a straight drop-in on future syncs. */
+  --font-family-display: var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-text: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
