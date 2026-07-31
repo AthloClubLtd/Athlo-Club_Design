@@ -179,11 +179,25 @@ export async function getClubBySlug(slug: string): Promise<ClubDetail | null> {
 }
 
 export async function getAllEventSlugs(): Promise<string[]> {
-  const events = await prisma.event.findMany({ select: { slug: true } });
-  return events.map((e) => e.slug);
+  try {
+    const events = await prisma.event.findMany({ select: { slug: true } });
+    return events.map((e) => e.slug);
+  } catch (error) {
+    // Used by generateStaticParams and sitemap.ts at build time — if the
+    // database is unreachable during the build, degrade to zero
+    // pre-rendered paths instead of failing the whole deployment. Pages
+    // still render on demand at runtime once the database is back.
+    console.warn("getAllEventSlugs: database unavailable, skipping static params", error);
+    return [];
+  }
 }
 
 export async function getAllClubSlugs(): Promise<string[]> {
-  const clubs = await prisma.club.findMany({ select: { slug: true } });
-  return clubs.map((c) => c.slug);
+  try {
+    const clubs = await prisma.club.findMany({ select: { slug: true } });
+    return clubs.map((c) => c.slug);
+  } catch (error) {
+    console.warn("getAllClubSlugs: database unavailable, skipping static params", error);
+    return [];
+  }
 }
