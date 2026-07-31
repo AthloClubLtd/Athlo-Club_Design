@@ -24,3 +24,43 @@ body {
     text-wrap: balance;
   }
 }
+
+/* LogoWall marquee (components/marketing/logo-wall.tsx) */
+@keyframes logo-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The track always renders exactly two copies of the logo set, so 50%
+       is exactly one copy's width — the loop point is seamless regardless
+       of how many logos there are or how wide the viewport is. */
+    transform: translateX(-50%);
+  }
+}
+
+.animate-logo-marquee {
+  /* Loop duration — the single adjustable constant. Deliberately a plain,
+     static utility class rather than a Tailwind arbitrary-value (e.g.
+     animate-[logo-marquee_32s_linear_infinite]): Tailwind's JIT content
+     scanner is static-text-only and can't see through a JS template
+     interpolation like `${LOOP_SECONDS}s`, so that class silently
+     generates no CSS at all. */
+  animation: logo-marquee 32s linear infinite;
+}
+
+.logo-marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--space-9),
+    black calc(100% - var(--space-9)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--space-9),
+    black calc(100% - var(--space-9)),
+    transparent
+  );
+}
