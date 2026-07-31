@@ -40,7 +40,7 @@ export default function Home() {
       </section>
 
       {/* §2 Trusted by */}
-      <section className="px-[var(--gutter)] py-[var(--space-9)]">
+      <section className="px-[var(--gutter)]">
         <LogoWall />
       </section>
     </div>
