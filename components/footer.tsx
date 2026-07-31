@@ -34,11 +34,8 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
           <div className="col-span-2 sm:col-span-1">
-            <Link href="/" className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
-              <span className="flex h-8 w-8 items-center justify-center rounded-md bg-lime text-navy">
-                A
-              </span>
-              Athlo Club
+            <Link href="/" className="flex items-center">
+              <img src="/assets/athlo-club-logo.svg" alt="Athlo Club" className="h-6 w-auto" />
             </Link>
             <p className="mt-4 max-w-xs text-sm text-grey-400">
               The platform for strength sports — discover, compete, and run
