@@ -1,34 +1,66 @@
-@import "tailwindcss";
-@import "../tokens.css";
-@config "../tailwind.config.js";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "../styles/tokens.css";
 
-/* Space Grotesk — self-hosted via @fontsource, no runtime network fetch */
-@import "@fontsource/space-grotesk/400.css";
-@import "@fontsource/space-grotesk/500.css";
-@import "@fontsource/space-grotesk/600.css";
-@import "@fontsource/space-grotesk/700.css";
+:root {
+  --background: #0f1b22;
+  --foreground: #ffffff;
 
-@layer base {
-  :root {
-    color-scheme: dark;
+  /* Bind the v1 brand tokens to the actual loaded webfonts (see layout.tsx).
+     Overrides the string fallbacks in tokens.css; nothing else in that
+     file is touched here so it stays a straight drop-in on future syncs. */
+  --font-family-display: var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-text: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
+}
 
-  * {
-    box-sizing: border-box;
+/* LogoWall marquee (components/marketing/logo-wall.tsx) */
+@keyframes logo-marquee {
+  from {
+    transform: translateX(0);
   }
+  to {
+    /* The track always renders exactly two copies of the logo set, so 50%
+       is exactly one copy's width — the loop point is seamless regardless
+       of how many logos there are or how wide the viewport is. */
+    transform: translateX(-50%);
+  }
+}
 
-  html,
-  body {
-    background: var(--color-bg-base);
-  }
+.animate-logo-marquee {
+  /* Loop duration — the single adjustable constant. Deliberately a plain,
+     static utility class rather than a Tailwind arbitrary-value (e.g.
+     animate-[logo-marquee_32s_linear_infinite]): Tailwind's JIT content
+     scanner is static-text-only and can't see through a JS template
+     interpolation like `${LOOP_SECONDS}s`, so that class silently
+     generates no CSS at all. */
+  animation: logo-marquee 32s linear infinite;
+}
 
-  body {
-    color: var(--color-text-body);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-
-  a {
-    color: inherit;
-  }
+.logo-marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--space-9),
+    black calc(100% - var(--space-9)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--space-9),
+    black calc(100% - var(--space-9)),
+    transparent
+  );
 }
