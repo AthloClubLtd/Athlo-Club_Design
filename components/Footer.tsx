@@ -24,7 +24,7 @@ export function Footer() {
               href="/"
               className="font-display text-lg font-bold tracking-tight text-lime"
             >
-              ATHLO
+              ATHLO CLUB
             </Link>
             <p className="mt-4 font-text text-sm text-ink-secondary">
               The platform for the strength sport community.
