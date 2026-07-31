@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
-import Nav from "@/components/nav";
-import Footer from "@/components/footer";
 import AuthSessionProvider from "@/components/session-provider";
 
 const inter = Inter({
@@ -42,11 +40,7 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} ${GeistSans.variable}`}
     >
       <body className="min-h-screen bg-navy font-sans text-white antialiased">
-        <AuthSessionProvider>
-          <Nav />
-          <main>{children}</main>
-          <Footer />
-        </AuthSessionProvider>
+        <AuthSessionProvider>{children}</AuthSessionProvider>
       </body>
     </html>
   );
