@@ -65,7 +65,7 @@ export function LogoWall({
     <div
       className={`border-y border-athlo-line-subtle py-[var(--space-8)] text-center ${className}`.trim()}
     >
-      <SectionLabel className="tracking-[var(--tracking-label)]">{label}</SectionLabel>
+      <SectionLabel>{label}</SectionLabel>
 
       <div className="logo-marquee-mask relative mt-[var(--space-6)] overflow-hidden">
         <ul className="flex w-max animate-logo-marquee items-center gap-[var(--space-6)] hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:animate-none motion-reduce:flex-wrap motion-reduce:justify-center">

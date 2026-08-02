@@ -6,6 +6,7 @@ import { LogoWall } from "@/components/marketing/logo-wall";
 import { AboutBlock } from "@/components/marketing/about-block";
 import { ImagePlaceholder } from "@/components/marketing/image-placeholder";
 import { ToolPills } from "@/components/marketing/tool-pills";
+import { HowItWorks } from "@/components/marketing/how-it-works";
 
 export const metadata: Metadata = {
   title: "Athlo Club — Connecting strength communities to the athletes who belong in them",
@@ -92,6 +93,11 @@ export default function Home() {
             <ImagePlaceholder alt="TODO: the Athlo Club event dashboard — registration, payments, scoring and live leaderboard in one screen" />
           }
         />
+      </div>
+
+      {/* §4 How it works */}
+      <div className="px-[var(--gutter)] py-[var(--space-9)]">
+        <HowItWorks />
       </div>
     </div>
   );

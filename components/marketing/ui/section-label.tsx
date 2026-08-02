@@ -9,7 +9,7 @@ export function SectionLabel({
 }) {
   return (
     <p
-      className={`font-display text-athlo-label font-semibold uppercase ${
+      className={`font-display text-athlo-label font-semibold uppercase tracking-[var(--tracking-label)] ${
         tone === "lime" ? "text-athlo-lime" : "text-athlo-text-secondary"
       } ${className}`.trim()}
     >
