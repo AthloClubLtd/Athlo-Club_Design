@@ -4,6 +4,7 @@ const navLinks = [
   { href: "/discover", label: "Discover events" },
   { href: "/playground", label: "Playground" },
   { href: "/investors", label: "Investor enquiries" },
+  { href: "/login", label: "Club login" },
 ];
 
 const legalLinks = [

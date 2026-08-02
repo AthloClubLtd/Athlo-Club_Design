@@ -9,6 +9,29 @@ const links = [
   { href: "/investors", label: "Investor enquiries" },
 ];
 
+// Not the primary CTA — the hero owns that (brand law 2: one lime action per
+// screen). This is the Secondary button treatment (bordered, no lime fill),
+// which is as prominent as this can be without a second primary action.
+function ClubLoginLink({ className = "" }: { className?: string }) {
+  return (
+    <Link
+      href="/login"
+      className={`flex items-center gap-[var(--space-2)] rounded-athlo-md border border-athlo-line-strong px-[var(--space-4)] py-[var(--space-2)] font-body font-semibold text-athlo-text-primary transition-colors hover:border-athlo-text-secondary ${className}`.trim()}
+    >
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path
+          d="M8 8a3 3 0 100-6 3 3 0 000 6zM2.5 14a5.5 5.5 0 0111 0"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      Club login
+    </Link>
+  );
+}
+
 export default function MarketingNav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,17 +56,20 @@ export default function MarketingNav() {
           <img src="/assets/athlo-club-logo.svg" alt="Athlo Club" className="h-6 w-auto" />
         </Link>
 
-        <nav className="hidden items-center gap-[var(--space-7)] md:flex">
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="font-body text-athlo-body font-medium text-athlo-text-secondary transition-colors hover:text-athlo-text-primary"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="hidden items-center gap-[var(--space-7)] md:flex">
+          <nav className="flex items-center gap-[var(--space-7)]">
+            {links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="font-body text-athlo-body font-medium text-athlo-text-secondary transition-colors hover:text-athlo-text-primary"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+          <ClubLoginLink />
+        </div>
 
         <button
           type="button"
@@ -82,6 +108,9 @@ export default function MarketingNav() {
                 </Link>
               </li>
             ))}
+            <li>
+              <ClubLoginLink className="w-fit" />
+            </li>
           </ul>
         </nav>
       )}

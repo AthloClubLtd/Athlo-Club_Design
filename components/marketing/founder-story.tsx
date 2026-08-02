@@ -16,15 +16,19 @@ export function FounderStory() {
           name="Swathi Pai"
           role="Founder & CEO · Athlete & builder"
           paragraph="Found a dozen run clubs on Strava in a day, but took 2+ months to find a women's powerlifting community. Endurance had a home. Strength didn't."
-          headshotAlt="TODO: headshot photo of Swathi Pai, Founder & CEO"
-          imageAlt="TODO: photo of Swathi Pai's strength sport story"
+          headshotAlt="Swathi Pai, Founder & CEO of Athlo Club"
+          headshotSrc="/assets/team/swathi-headshot.jpg"
+          imageAlt="Swathi Pai running with a crowd of supporters at a community event, and competing in a weightlifting deadlift"
+          imageSrc="/assets/team/swathi-story.jpg"
         />
         <FounderCard
           name="Tom Hunt"
           role="Chief Growth Officer · Coach & gym owner"
           paragraph="Runs a gym across three strength sports. Used 7+ tools to put on one event, and spent on ads that never reached the right athletes."
-          headshotAlt="TODO: headshot photo of Tom Hunt, Chief Growth Officer"
-          imageAlt="TODO: photo of Tom Hunt's gym and coaching story"
+          headshotAlt="Tom Hunt, Chief Growth Officer of Athlo Club"
+          headshotSrc="/assets/team/tom-headshot.jpg"
+          imageAlt="Tom Hunt speaking at a gym event, and a competitor lifting a barbell overhead at a strength competition"
+          imageSrc="/assets/team/tom-story.jpg"
         />
       </div>
     </section>
