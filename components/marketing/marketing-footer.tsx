@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { LogoMark } from "@/components/marketing/logo-mark";
 
 const navLinks = [
   { href: "/discover", label: "Discover events" },
@@ -18,8 +17,8 @@ export default function MarketingFooter() {
       <div className="mx-auto max-w-[var(--container-wide)] px-[var(--gutter)] py-[var(--space-9)]">
         <div className="flex flex-col gap-[var(--space-7)] sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <Link href="/">
-              <LogoMark />
+            <Link href="/" className="flex items-center">
+              <img src="/assets/athlo-club-logo.svg" alt="Athlo Club" className="h-6 w-auto" />
             </Link>
             <p className="mt-[var(--space-3)] font-body text-athlo-body text-athlo-text-secondary">
               The home of strength sport.

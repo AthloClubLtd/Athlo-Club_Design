@@ -15,11 +15,8 @@ export default function Nav() {
   return (
     <header className="relative z-50 border-b border-white/5 bg-navy/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-lime text-navy">
-            A
-          </span>
-          Athlo Club
+        <Link href="/" className="flex items-center">
+          <img src="/assets/athlo-club-logo.svg" alt="Athlo Club" className="h-6 w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
