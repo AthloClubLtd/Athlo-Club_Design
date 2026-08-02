@@ -5,28 +5,19 @@ import { useEffect, useRef, useState } from "react";
 // Single adjustable constant per the brief's 8-15fps "fast-cut film" range.
 const FPS = 12;
 
-const DEFAULT_FRAME_COUNT = 6;
-
-// TODO: replace with real hero photography frame URLs once supplied.
-// Generated inline so the preload/RAF/loop mechanics below are exercised
-// end-to-end with working <img> sources rather than empty boxes.
-function placeholderFrame(index: number, total: number): string {
-  const angle = (360 / total) * index;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="800" viewBox="0 0 640 800">
-    <rect width="640" height="800" fill="#141416" />
-    <g transform="rotate(${angle} 320 400)">
-      <rect x="-120" y="380" width="880" height="40" fill="#2E2E33" />
-    </g>
-    <text x="320" y="412" font-family="monospace" font-size="26" fill="#55564F" text-anchor="middle">FRAME ${
-      index + 1
-    }/${total}</text>
-  </svg>`;
-  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
-}
-
-const DEFAULT_FRAMES = Array.from({ length: DEFAULT_FRAME_COUNT }, (_, i) =>
-  placeholderFrame(i, DEFAULT_FRAME_COUNT),
-);
+// Real community photography, resized/recompressed for web (see
+// public/assets/hero/ — originals were 1-2MB phone-camera JPEGs at up to
+// 1590px tall; downsized to a 1200px ceiling at q78, ~100-160KB each) so
+// preloading all 7 before playback starts doesn't stall the hero.
+const DEFAULT_FRAMES = [
+  "/assets/hero/frame-1.jpg",
+  "/assets/hero/frame-2.jpg",
+  "/assets/hero/frame-3.jpg",
+  "/assets/hero/frame-4.jpg",
+  "/assets/hero/frame-5.jpg",
+  "/assets/hero/frame-6.jpg",
+  "/assets/hero/frame-7.jpg",
+];
 
 export function HeroFlipbook({
   frames = DEFAULT_FRAMES,
@@ -138,6 +129,8 @@ export function HeroFlipbook({
           src={src}
           alt=""
           aria-hidden="true"
+          // First frame is the LCP candidate — the hero renders above the fold.
+          fetchPriority={i === 0 ? "high" : undefined}
           className="absolute inset-0 h-full w-full object-cover"
           style={{
             opacity: loaded && i === displayIndex ? 1 : 0,
