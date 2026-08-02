@@ -8,6 +8,8 @@ import { ImagePlaceholder } from "@/components/marketing/image-placeholder";
 import { ToolPills } from "@/components/marketing/tool-pills";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { FounderStory } from "@/components/marketing/founder-story";
+import { Mission } from "@/components/marketing/mission";
+import { LimeCTABand } from "@/components/marketing/lime-cta-band";
 
 export const metadata: Metadata = {
   title: "Athlo Club — Connecting strength communities to the athletes who belong in them",
@@ -105,6 +107,12 @@ export default function Home() {
       <div className="mx-auto max-w-[var(--container-wide)] px-[var(--gutter)] py-[var(--space-9)]">
         <FounderStory />
       </div>
+
+      {/* §6 Mission */}
+      <Mission />
+
+      {/* §7 Final CTA band */}
+      <LimeCTABand />
     </div>
   );
 }
