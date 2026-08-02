@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 // Single adjustable constant. Below the brief's original 8-15fps "fast-cut
 // film" range at the user's explicit request.
-const FPS = 6;
+const FPS = 4;
 
 // Real community photography, resized/recompressed for web (see
 // public/assets/hero/ — originals were 1-2MB phone-camera JPEGs at up to
