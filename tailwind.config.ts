@@ -9,6 +9,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        // Playground shell (app/(marketing)/playground): the point where a
+        // ~360px phone frame + a wider web-app frame + gap + page gutters
+        // stop fitting --container-wide (1280px) comfortably. Not one of
+        // the default sm/md/lg/xl steps, so it's named rather than an
+        // arbitrary value repeated at every call site.
+        pg: "980px",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
