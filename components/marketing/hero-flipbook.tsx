@@ -33,6 +33,7 @@ export function HeroFlipbook({
   const [loaded, setLoaded] = useState(false);
   const [frameIndex, setFrameIndex] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [touchRevealed, setTouchRevealed] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>();
   const accumulatorRef = useRef(0);
@@ -44,6 +45,27 @@ export function HeroFlipbook({
     const onChange = () => setReducedMotion(mq.matches);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // Touch devices have no hover state, so the B&W→colour reveal (see
+  // .site-photo in globals.css) instead triggers once the hero scrolls
+  // into view. Pointer devices skip this and rely on the CSS :hover rule.
+  useEffect(() => {
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTouchRevealed(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   // Preload every frame before playback starts — no flicker/pop-in.
@@ -119,7 +141,7 @@ export function HeroFlipbook({
   return (
     <div
       ref={containerRef}
-      className={`relative h-full w-full overflow-hidden rounded-athlo-lg bg-athlo-bg-raised ${className}`.trim()}
+      className={`photo-hover-area relative h-full w-full overflow-hidden rounded-athlo-lg bg-athlo-bg-raised ${className}`.trim()}
       role="img"
       aria-label="Athlo Club community in motion"
     >
@@ -132,10 +154,11 @@ export function HeroFlipbook({
           aria-hidden="true"
           // First frame is the LCP candidate — the hero renders above the fold.
           fetchPriority={i === 0 ? "high" : undefined}
-          className="absolute inset-0 h-full w-full object-cover"
+          className={`site-photo pointer-events-none absolute inset-0 h-full w-full object-cover ${
+            touchRevealed ? "is-revealed" : ""
+          }`.trim()}
           style={{
             opacity: loaded && i === displayIndex ? 1 : 0,
-            filter: "grayscale(1) contrast(1.08)",
           }}
         />
       ))}

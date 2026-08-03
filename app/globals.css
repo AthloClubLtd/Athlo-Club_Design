@@ -48,6 +48,45 @@ body {
   animation: logo-marquee 32s linear infinite;
 }
 
+/* Shared B&W → colour photography treatment (CLAUDE.md law 6). One place
+   to tune the resting filter — every real site photo (hero flipbook
+   frames, founder story photos, about/problem images once supplied)
+   should carry this class instead of an inline filter. */
+.site-photo {
+  filter: grayscale(1) contrast(1.1) brightness(1.08);
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+/* Pointer devices: hover reveals full colour with a very subtle lift.
+   Gated on (hover: hover) so touch devices — which have no hover state —
+   don't get stuck showing grey, per the .is-revealed rule below instead. */
+@media (hover: hover) and (pointer: fine) {
+  .site-photo:hover,
+  /* Stacked-frame photos (hero flipbook) put pointer-events on the group
+     wrapper, not the individual frames — see .photo-hover-area below. */
+  .photo-hover-area:hover .site-photo {
+    filter: grayscale(0) contrast(1) brightness(1);
+    transform: scale(1.02);
+  }
+}
+
+/* Touch devices: set by usePhotoReveal() once the image scrolls into
+   view (no hover to trigger off of). */
+.site-photo.is-revealed {
+  filter: grayscale(0) contrast(1) brightness(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-photo {
+    transition: none;
+  }
+  .site-photo:hover,
+  .site-photo.is-revealed,
+  .photo-hover-area:hover .site-photo {
+    transform: none;
+  }
+}
+
 .logo-marquee-mask {
   -webkit-mask-image: linear-gradient(
     to right,
