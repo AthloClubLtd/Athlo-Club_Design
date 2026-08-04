@@ -36,6 +36,11 @@
   --color-text-disabled:  #55564F;
   --color-text-on-lime:   #0B0B0C;  /* text on a lime fill */
 
+  /* ---- COLOR / STATUS -------------------------------------
+     Functional, not brand — never a substitute for lime. Reserved for
+     states like a registration-deadline countdown. */
+  --color-amber:         #E7B24C;  /* urgency / closes-soon */
+
   /* ---- TYPE / FAMILY ------------------------------------- */
   /* Space Grotesk = titles, headings, numerals, labels (display + structural)
      Geist        = body, paragraphs, captions, inputs, buttons, nav (read + UI) */
