@@ -52,7 +52,7 @@ export function EventRow({ event }: { event: MockEvent }) {
             </span>
           )}
           {isCompetition && event.registrationClosesAt && (
-            <span className="flex items-center gap-[var(--space-2)] font-body text-athlo-label font-semibold text-athlo-amber">
+            <span className="flex items-center gap-[var(--space-2)] font-body text-athlo-label font-semibold text-athlo-warning">
               <Clock size={13} aria-hidden="true" />
               {formatClosesIn(event.registrationClosesAt)}
             </span>

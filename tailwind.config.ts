@@ -53,7 +53,7 @@ const config: Config = {
           "text-secondary": "var(--color-text-secondary)",
           "text-disabled": "var(--color-text-disabled)",
           "text-on-lime": "var(--color-text-on-lime)",
-          amber: "var(--color-amber)",
+          warning: "var(--color-warning)",
         },
       },
       fontFamily: {

@@ -2,16 +2,16 @@
 
 import { useMemo, useState } from "react";
 import { useEventsStore } from "@/lib/playground/events-store";
-import type { Difficulty, Sport } from "@/lib/playground/types";
+import { DIFFICULTY_FILTERS, RADIUS_FILTERS, type Difficulty, type Sport } from "@/lib/playground/types";
 import { TopBar } from "@/components/playground/athlete/top-bar";
 import { SearchBar } from "@/components/playground/athlete/search-bar";
 import { DiscoverTabs, type DiscoverTabKey } from "@/components/playground/athlete/discover-tabs";
 import { SportFilterChips } from "@/components/playground/athlete/sport-filter-chips";
-import { DifficultySelect } from "@/components/playground/athlete/difficulty-select";
-import { LocationRadiusSelect } from "@/components/playground/athlete/location-radius-select";
+import { FilterDropdown } from "@/components/playground/athlete/filter-dropdown";
 import { NearYouList } from "@/components/playground/athlete/near-you-list";
-import { EventShelf } from "@/components/playground/athlete/event-shelf";
-import { ClubShelf } from "@/components/playground/athlete/club-shelf";
+import { SectionShelf } from "@/components/playground/athlete/section-shelf";
+import { EventCardHorizontal } from "@/components/playground/athlete/event-card-horizontal";
+import { ClubCard } from "@/components/playground/athlete/club-card";
 import { VolunteeringEmptyState } from "@/components/playground/athlete/volunteering-empty-state";
 import { BottomNav } from "@/components/playground/athlete/bottom-nav";
 
@@ -51,7 +51,7 @@ export function DiscoverPage() {
       // passes the radius filter rather than being wrongly excluded.
       if (radius !== "any" && !event.location.isVirtual && event.location.distanceMiles > radius) return false;
       if (q) {
-        const haystack = `${event.title} ${event.clubName} ${event.sports.join(" ")}`.toLowerCase();
+        const haystack = `${event.title} ${event.clubName} ${event.sports.join(" ")} ${event.location.name}`.toLowerCase();
         if (!haystack.includes(q)) return false;
       }
       return true;
@@ -84,8 +84,20 @@ export function DiscoverPage() {
           <div className="flex flex-col gap-[var(--space-2)]">
             <SportFilterChips selected={selectedSports} onToggle={toggleSport} onSelectAll={clearSports} />
             <div className="flex flex-wrap gap-[var(--space-2)] px-[var(--space-4)]">
-              <DifficultySelect value={difficulty} onChange={setDifficulty} />
-              <LocationRadiusSelect value={radius} onChange={setRadius} />
+              <FilterDropdown
+                id="discover-difficulty"
+                label="Filter by level"
+                options={DIFFICULTY_FILTERS}
+                value={difficulty}
+                onChange={setDifficulty}
+              />
+              <FilterDropdown
+                id="discover-radius"
+                label="Filter by distance"
+                options={RADIUS_FILTERS}
+                value={radius}
+                onChange={setRadius}
+              />
             </div>
           </div>
         )}
@@ -102,9 +114,27 @@ export function DiscoverPage() {
             className="pb-[var(--space-8)]"
           >
             <NearYouList events={filteredEvents} />
-            <EventShelf title="This week" subtitle="Next 7 days" events={thisWeek} />
-            <ClubShelf title="Clubs to follow" subtitle="Communities near you" clubs={followableClubs} />
-            <EventShelf title="Trending" subtitle="Popular near you" events={trending} />
+            <SectionShelf
+              title="This week"
+              subtitle="Next 7 days"
+              items={thisWeek}
+              getKey={(e) => e.id}
+              renderItem={(e) => <EventCardHorizontal event={e} />}
+            />
+            <SectionShelf
+              title="Clubs to follow"
+              subtitle="Communities near you"
+              items={followableClubs}
+              getKey={(c) => c.id}
+              renderItem={(c) => <ClubCard club={c} />}
+            />
+            <SectionShelf
+              title="Trending"
+              subtitle="Popular near you"
+              items={trending}
+              getKey={(e) => e.id}
+              renderItem={(e) => <EventCardHorizontal event={e} />}
+            />
           </div>
         )}
       </div>

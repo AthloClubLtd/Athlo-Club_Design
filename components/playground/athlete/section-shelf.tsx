@@ -1,16 +1,19 @@
-import type { Club } from "@/lib/playground/types";
-import { ClubCard } from "@/components/playground/athlete/club-card";
+import { Fragment } from "react";
 
-export function ClubShelf({
+export function SectionShelf<T>({
   title,
   subtitle,
-  clubs,
+  items,
+  getKey,
+  renderItem,
 }: {
   title: string;
   subtitle?: string;
-  clubs: Club[];
+  items: T[];
+  getKey: (item: T) => string;
+  renderItem: (item: T) => React.ReactNode;
 }) {
-  if (clubs.length === 0) return null;
+  if (items.length === 0) return null;
 
   return (
     <div className="mt-[var(--space-6)]">
@@ -19,8 +22,8 @@ export function ClubShelf({
         {subtitle && <span className="font-body text-athlo-label text-athlo-text-secondary">{subtitle}</span>}
       </div>
       <div className="mt-[var(--space-3)] flex gap-[var(--space-3)] overflow-x-auto px-[var(--space-4)] pb-[var(--space-1)]">
-        {clubs.map((club) => (
-          <ClubCard key={club.id} club={club} />
+        {items.map((item) => (
+          <Fragment key={getKey(item)}>{renderItem(item)}</Fragment>
         ))}
       </div>
     </div>

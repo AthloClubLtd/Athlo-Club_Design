@@ -1,4 +1,4 @@
-import { BadgeCheck, Dumbbell, Flame, Footprints, Mars, Venus } from "lucide-react";
+import { BadgeCheck, Dumbbell, Flame, Footprints } from "lucide-react";
 import type { Sport } from "@/lib/playground/types";
 
 type IconComponent = (props: { size?: number; className?: string }) => React.ReactNode;
@@ -66,8 +66,6 @@ export const SPORT_ICONS: Record<Sport, IconComponent> = {
   "fitness-racing": Footprints,
   hyrox: Flame,
   "crossfit-affiliated": BadgeCheck,
-  "womens-only": Venus,
-  "mens-only": Mars,
   bodybuilding: BicepIcon,
   strongman: AtlasStoneIcon,
 };
