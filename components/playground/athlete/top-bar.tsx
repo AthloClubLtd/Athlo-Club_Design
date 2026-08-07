@@ -6,9 +6,10 @@ import { mockAthlete } from "@/lib/playground/events-store";
 export function TopBar() {
   return (
     <div className="flex items-center justify-between gap-[var(--space-3)] px-[var(--space-4)]">
-      <span className="font-display text-athlo-body-lg font-bold tracking-[var(--tracking-heading)] text-athlo-lime">
-        ATHLO
-      </span>
+      {/* Same asset used in the marketing nav/footer — the mark itself
+          only depicts "ATHLO"; "Athlo Club" is carried as its accessible
+          name, matching how the rest of the site handles this logo. */}
+      <img src="/assets/athlo-club-logo.svg" alt="Athlo Club" className="h-5 w-auto" />
       <div className="flex items-center gap-[var(--space-2)]">
         <button
           type="button"

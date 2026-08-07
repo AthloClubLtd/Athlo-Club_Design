@@ -11,7 +11,7 @@ export function VolunteeringEmptyState() {
       <HeartHandshake size={28} aria-hidden="true" className="text-athlo-text-disabled" />
       <p className="font-display text-athlo-body-lg font-semibold text-athlo-text-primary">Coming soon</p>
       <p className="font-body text-athlo-body text-athlo-text-secondary">
-        Volunteering opportunities at strength events will show up here.
+        You&apos;ll be able to find volunteering opportunities around you.
       </p>
     </div>
   );

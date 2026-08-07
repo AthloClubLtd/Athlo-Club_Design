@@ -19,111 +19,118 @@ export const mockClubs: Club[] = [
   { id: "strong-girls-hq", name: "Strong Girls HQ", location: "London, UK", isPrivateClub: false },
 ];
 
+function clubOf(clubId: string): Club {
+  const club = mockClubs.find((c) => c.id === clubId);
+  if (!club) throw new Error(`Unknown seed club: ${clubId}`);
+  return club;
+}
+
+/** clubName/isPrivateClub are denormalized from the club record here, at
+ * seed time, so they can never drift out of sync with mockClubs. */
+function seedEvent(clubId: string, event: Omit<MockEvent, "clubId" | "clubName" | "isPrivateClub">): MockEvent {
+  const club = clubOf(clubId);
+  return { ...event, clubId, clubName: club.name, isPrivateClub: club.isPrivateClub };
+}
+
 export const seedEvents: MockEvent[] = [
-  {
+  seedEvent("central-staffs-crossfit", {
     id: "weekend-warrior-wod",
     title: "Weekend Warrior WOD",
-    clubId: "central-staffs-crossfit",
     type: "event",
     sports: ["crossfit-affiliated"],
-    level: "beginner",
+    level: "Beginner",
     date: isoDateInDays(0),
     time: "9:00 AM",
     location: { name: "Stafford", distanceMiles: 1.2, isVirtual: false },
     price: "free",
     goingCount: 38,
-  },
-  {
+  }),
+  seedEvent("london-wl-club", {
     id: "barbell-club-open-session",
     title: "Barbell Club Open Session",
-    clubId: "london-wl-club",
     type: "event",
     sports: ["weightlifting"],
-    level: "beginner",
+    level: "Beginner",
     date: isoDateInDays(0),
     time: "6:00 PM",
     location: { name: "London", distanceMiles: 2.1, isVirtual: false },
     price: 15,
     goingCount: 9,
-  },
-  {
+  }),
+  seedEvent("crazy-strength", {
     id: "summer-hyrox-simulation",
     title: "Summer Hyrox Simulation",
-    clubId: "crazy-strength",
     type: "event",
     sports: ["hyrox"],
-    level: "intermediate",
+    level: "Intermediate",
     date: isoDateInDays(14),
     location: { name: "Virtual", distanceMiles: 0, isVirtual: true },
     price: 45,
     goingCount: 12,
-  },
-  {
+  }),
+  seedEvent("strong-girls-hq", {
     id: "womens-strength-circuit",
     title: "Women's Strength Circuit",
-    clubId: "strong-girls-hq",
     type: "event",
     sports: ["weightlifting", "womens-only"],
-    level: "intermediate",
+    level: "Intermediate",
     date: isoDateInDays(3),
     time: "6:30 PM",
     location: { name: "London", distanceMiles: 0.8, isVirtual: false },
     price: "free",
     goingCount: 21,
-  },
-  {
+  }),
+  seedEvent("crazy-strength", {
     id: "fitness-racing-trail-series",
     title: "Fitness Racing Trail Series",
-    clubId: "crazy-strength",
     type: "event",
     sports: ["fitness-racing"],
-    level: "open",
+    level: "Open",
     date: isoDateInDays(5),
     time: "8:00 AM",
     location: { name: "Wolverhampton", distanceMiles: 3.0, isVirtual: false },
     price: 20,
     goingCount: 15,
-  },
-  {
+  }),
+  seedEvent("british-powerlifting", {
     id: "summer-classic-powerlifting",
     title: "Summer Classic — Powerlifting",
-    clubId: "british-powerlifting",
     type: "competition",
     sports: ["powerlifting"],
-    level: "open",
+    level: "Open",
     date: isoDateInDays(7),
     location: { name: "Staffordshire", distanceMiles: 3.4, isVirtual: false },
     price: 120,
     registeredCount: 214,
     registrationClosesAt: isoDateInDays(5),
     categories: ["Open", "Masters", "U23"],
-  },
-  {
+  }),
+  seedEvent("central-staffs-crossfit", {
     id: "strongman-novice-throwdown",
     title: "Strongman Novice Throwdown",
-    clubId: "central-staffs-crossfit",
     type: "competition",
     sports: ["strongman"],
-    level: "beginner",
+    level: "Beginner",
     date: isoDateInDays(10),
     location: { name: "Stafford", distanceMiles: 1.2, isVirtual: false },
     price: 30,
     registeredCount: 24,
     registrationClosesAt: isoDateInDays(2),
     categories: ["Novice"],
-  },
-  {
+  }),
+  // Deliberately outside the default 10 mi radius, so the radius filter has
+  // something real to demonstrate (falls out at 10 mi, back at 25 mi/Any).
+  seedEvent("crazy-strength", {
     id: "autumn-hyrox-qualifier",
     title: "Autumn Hyrox Qualifier",
-    clubId: "crazy-strength",
     type: "competition",
     sports: ["hyrox"],
-    level: "advanced",
+    level: "Advanced",
     date: isoDateInDays(21),
-    location: { name: "Wolverhampton", distanceMiles: 4.5, isVirtual: false },
+    location: { name: "Wolverhampton", distanceMiles: 14.5, isVirtual: false },
     price: 65,
     registeredCount: 87,
     registrationClosesAt: isoDateInDays(10),
     categories: ["Open", "Elite"],
-  },
+  }),
 ];

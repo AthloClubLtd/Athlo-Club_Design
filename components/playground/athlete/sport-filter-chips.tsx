@@ -1,6 +1,7 @@
 "use client";
 
 import { SPORT_FILTERS, type Sport } from "@/lib/playground/types";
+import { SPORT_ICONS } from "@/components/playground/athlete/sport-icons";
 
 export function SportFilterChips({
   selected,
@@ -30,16 +31,20 @@ export function SportFilterChips({
       </button>
       {SPORT_FILTERS.map((sport) => {
         const active = selected.has(sport.value);
+        const Icon = SPORT_ICONS[sport.value];
         return (
           <button
             key={sport.value}
             type="button"
             aria-pressed={active}
             onClick={() => onToggle(sport.value)}
-            className={`min-h-9 shrink-0 whitespace-nowrap rounded-athlo-pill px-[var(--space-4)] font-body text-athlo-label font-semibold transition-colors ${
+            className={`flex min-h-9 shrink-0 items-center gap-[var(--space-2)] whitespace-nowrap rounded-athlo-pill px-[var(--space-4)] font-body text-athlo-label font-semibold transition-colors ${
               active ? "bg-athlo-line-strong text-athlo-text-primary" : "bg-athlo-bg-overlay text-athlo-text-secondary"
             }`}
           >
+            <span aria-hidden="true" className="shrink-0">
+              <Icon size={14} />
+            </span>
             {sport.label}
           </button>
         );
