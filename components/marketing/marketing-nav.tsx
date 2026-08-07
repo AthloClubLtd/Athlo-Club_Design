@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { AthloClubWordmark } from "@/components/marketing/ui/athlo-club-wordmark";
 
 const links = [
   { href: "/discover", label: "Discover events" },
@@ -52,9 +53,7 @@ export default function MarketingNav() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-[var(--container-wide)] items-center justify-between px-[var(--gutter)]">
-        <Link href="/" className="flex items-center">
-          <img src="/assets/athlo-club-logo.svg" alt="Athlo Club" className="h-6 w-auto" />
-        </Link>
+        <AthloClubWordmark href="/" />
 
         <div className="hidden items-center gap-[var(--space-7)] md:flex">
           <nav className="flex items-center gap-[var(--space-7)]">

@@ -15,10 +15,7 @@ export function SportFilterChips({
   const isAllActive = selected.size === 0;
 
   return (
-    <div
-      className="flex gap-[var(--space-2)] overflow-x-auto px-[var(--space-4)] pb-[var(--space-1)]"
-      style={{ scrollbarWidth: "none" }}
-    >
+    <div className="no-scrollbar flex gap-[var(--space-2)] overflow-x-auto px-[var(--space-4)] pb-[var(--space-1)]">
       <button
         type="button"
         aria-pressed={isAllActive}

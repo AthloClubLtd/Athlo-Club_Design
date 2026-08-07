@@ -87,6 +87,69 @@ body {
   }
 }
 
+/* Playground device screens (components/playground) simulate a real app —
+   real mobile apps don't show a scrollbar track, so scrollable regions
+   inside the frame hide it rather than showing a raw OS/browser scrollbar
+   over the dark UI. The content stays scrollable; only the track is hidden. */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Chromium Edge */
+}
+
+/* Discover curation splash (components/playground/athlete/discover-curation-splash.tsx) */
+@keyframes splash-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-splash-line-in {
+  animation: splash-line-in 200ms ease-out;
+}
+
+@keyframes splash-bg-pulse {
+  0%,
+  100% {
+    opacity: 0.06;
+  }
+  50% {
+    opacity: 0.14;
+  }
+}
+.animate-splash-bg-pulse {
+  animation: splash-bg-pulse 3s ease-in-out infinite;
+}
+
+/* Discover's entrance once the splash hands off (athlete-phone-screen.tsx) */
+@keyframes discover-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-discover-enter {
+  animation: discover-enter 250ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-splash-line-in,
+  .animate-splash-bg-pulse,
+  .animate-discover-enter {
+    animation: none;
+  }
+}
+
 .logo-marquee-mask {
   -webkit-mask-image: linear-gradient(
     to right,

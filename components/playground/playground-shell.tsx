@@ -8,7 +8,7 @@ import { FramePlaceholder } from "@/components/playground/frame-placeholder";
 import { PlaygroundToggle, type PlaygroundPanelKey } from "@/components/playground/playground-toggle";
 import { useMediaQuery } from "@/components/playground/use-media-query";
 import { EventsProvider } from "@/lib/playground/events-store";
-import { DiscoverPage } from "@/components/playground/athlete/discover-page";
+import { AthletePhoneScreen } from "@/components/playground/athlete/athlete-phone-screen";
 
 function PlaygroundPanel({
   id,
@@ -79,7 +79,7 @@ export function PlaygroundShell() {
         >
           <PlaygroundPanel id="athlete" label="Athlete" isDesktop={isDesktop} isActive={active === "athlete"}>
             <PhoneFrame>
-              <DiscoverPage />
+              <AthletePhoneScreen />
             </PhoneFrame>
           </PlaygroundPanel>
 

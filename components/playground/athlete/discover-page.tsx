@@ -76,12 +76,12 @@ export function DiscoverPage() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex flex-col gap-[var(--space-3)] pb-[var(--space-3)] pt-[var(--space-2)]">
+      <div className="flex flex-col gap-[var(--space-4)] pb-[var(--space-4)] pt-[var(--space-4)]">
         <TopBar />
         <SearchBar value={query} onChange={setQuery} />
         <DiscoverTabs active={activeTab} onChange={setActiveTab} />
         {activeTab === "events" && (
-          <div className="flex flex-col gap-[var(--space-2)]">
+          <div className="flex flex-col gap-[var(--space-3)]">
             <SportFilterChips selected={selectedSports} onToggle={toggleSport} onSelectAll={clearSports} />
             <div className="flex flex-wrap gap-[var(--space-2)] px-[var(--space-4)]">
               <FilterDropdown
@@ -103,7 +103,7 @@ export function DiscoverPage() {
         )}
       </div>
 
-      <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto">
+      <div className="no-scrollbar min-h-0 flex-1 overflow-x-hidden overflow-y-auto">
         {activeTab === "volunteering" ? (
           <VolunteeringEmptyState />
         ) : (
@@ -111,7 +111,7 @@ export function DiscoverPage() {
             role="tabpanel"
             id="discover-panel-events"
             aria-labelledby="discover-tab-events"
-            className="pb-[var(--space-8)]"
+            className="pt-[var(--space-5)] pb-[var(--space-8)]"
           >
             <NearYouList events={filteredEvents} />
             <SectionShelf
