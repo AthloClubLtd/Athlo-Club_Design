@@ -15,12 +15,14 @@ function PlaygroundPanel({
   label,
   isDesktop,
   isActive,
+  className = "",
   children,
 }: {
   id: PlaygroundPanelKey;
   label: string;
   isDesktop: boolean;
   isActive: boolean;
+  className?: string;
   children: React.ReactNode;
 }) {
   // Below `pg`, only the toggle-selected panel renders at all — it isn't
@@ -38,6 +40,7 @@ function PlaygroundPanel({
       role={isDesktop ? undefined : "tabpanel"}
       aria-labelledby={isDesktop ? undefined : `playground-tab-${id}`}
       aria-label={isDesktop ? label : undefined}
+      className={className}
     >
       <SectionLabel className={isDesktop ? "" : "text-center"}>{label}</SectionLabel>
       <div className="mt-[var(--space-4)]">{children}</div>
@@ -72,18 +75,33 @@ export function PlaygroundShell() {
           </div>
         )}
 
-        <div
-          className={`mt-[var(--space-7)] grid gap-[var(--space-8)] ${
-            isDesktop ? "grid-cols-[360px_1fr] items-start" : "grid-cols-1"
-          }`}
-        >
-          <PlaygroundPanel id="athlete" label="Athlete" isDesktop={isDesktop} isActive={active === "athlete"}>
+        {/* Flexbox, not CSS Grid — a nested flex+aspect-ratio element (see
+            PhoneFrame) doesn't correctly size when the outer layout is a
+            Grid, even with a definite (non-auto) column: confirmed by
+            testing that the identical flex+aspect-ratio markup resolves
+            correctly on its own and even freshly appended straight to
+            <body>, but not inside this Grid specifically. Flex sidesteps
+            it entirely and is what's actually verified to work. */}
+        <div className={`mt-[var(--space-7)] gap-[var(--space-8)] ${isDesktop ? "flex items-start" : "grid grid-cols-1"}`}>
+          <PlaygroundPanel
+            id="athlete"
+            label="Athlete"
+            isDesktop={isDesktop}
+            isActive={active === "athlete"}
+            className={isDesktop ? "w-[360px] shrink-0" : ""}
+          >
             <PhoneFrame>
               <AthletePhoneScreen />
             </PhoneFrame>
           </PlaygroundPanel>
 
-          <PlaygroundPanel id="organiser" label="Organiser" isDesktop={isDesktop} isActive={active === "organiser"}>
+          <PlaygroundPanel
+            id="organiser"
+            label="Organiser"
+            isDesktop={isDesktop}
+            isActive={active === "organiser"}
+            className={isDesktop ? "min-w-0 flex-1" : ""}
+          >
             <WebAppFrame>
               <FramePlaceholder title="Organiser view" note="Built in the next step." />
             </WebAppFrame>

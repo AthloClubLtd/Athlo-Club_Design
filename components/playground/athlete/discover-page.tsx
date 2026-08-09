@@ -76,7 +76,9 @@ export function DiscoverPage() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex flex-col gap-[var(--space-4)] pb-[var(--space-4)] pt-[var(--space-4)]">
+      {/* No pt- here — PhoneFrame's own screen wrapper already reserves
+          the Dynamic Island safe-area clearance for every screen. */}
+      <div className="flex flex-col gap-[var(--space-4)] pb-[var(--space-4)]">
         <TopBar />
         <SearchBar value={query} onChange={setQuery} />
         <DiscoverTabs active={activeTab} onChange={setActiveTab} />
