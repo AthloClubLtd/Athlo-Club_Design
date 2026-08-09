@@ -11,28 +11,36 @@ export function EventRow({ event, onSelect }: { event: MockEvent; onSelect: (eve
       onClick={() => onSelect(event.id)}
       className="flex w-full gap-[var(--space-3)] px-[var(--space-4)] py-[var(--space-4)] text-left"
     >
-      {event.imageUrl ? (
-        <img
-          src={event.imageUrl}
-          alt=""
-          className="h-14 w-14 shrink-0 rounded-athlo-md object-cover"
-        />
-      ) : (
-        // Decorative placeholder — no real event photography supplied yet;
-        // the title/club text beside it already carries the information.
-        <div aria-hidden="true" className="h-14 w-14 shrink-0 rounded-athlo-md bg-athlo-bg-overlay" />
-      )}
+      <div className="relative h-14 w-14 shrink-0">
+        {event.imageUrl ? (
+          <img src={event.imageUrl} alt="" className="h-14 w-14 rounded-athlo-md object-cover" />
+        ) : (
+          // Decorative placeholder — no real event photography supplied yet;
+          // the title/club text beside it already carries the information.
+          <div aria-hidden="true" className="h-14 w-14 rounded-athlo-md bg-athlo-bg-overlay" />
+        )}
+        {/* Icon-only, overlaid on the thumbnail's own fixed-size box rather
+            than sharing a row with clubName: a labelled "Competition" chip
+            here is wider (~134px) than the middle column ever has to give
+            it (~94px is typical, once the thumbnail and the count/price
+            column take their share), so it doesn't matter how much
+            clubName truncates — the chip still doesn't fit and spills onto
+            the count column next to it (confirmed: badge measured 36px
+            into "N registered"'s space). The thumbnail box's size never
+            depends on either text column, so a badge anchored to it can
+            never contend with them. */}
+        {isCompetition && (
+          <span
+            aria-label="Competition"
+            className="absolute -left-[var(--space-1)] -top-[var(--space-1)] flex h-5 w-5 items-center justify-center rounded-athlo-pill border border-athlo-line-strong bg-athlo-bg-overlay text-athlo-text-primary"
+          >
+            <Trophy size={11} aria-hidden="true" />
+          </span>
+        )}
+      </div>
 
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-[var(--space-2)]">
-          <span className="truncate font-body text-athlo-label text-athlo-text-secondary">{event.clubName}</span>
-          {isCompetition && (
-            <span className="flex shrink-0 items-center gap-[var(--space-1)] rounded-athlo-sm bg-athlo-bg-overlay px-[var(--space-2)] py-[var(--space-1)] font-body text-athlo-label font-semibold uppercase tracking-[var(--tracking-label)] text-athlo-text-secondary">
-              <Trophy size={11} aria-hidden="true" />
-              Competition
-            </span>
-          )}
-        </div>
+        <span className="block truncate font-body text-athlo-label text-athlo-text-secondary">{event.clubName}</span>
 
         <p className="mt-[var(--space-1)] line-clamp-2 font-display text-athlo-body-lg font-semibold text-athlo-text-primary">
           {event.title}

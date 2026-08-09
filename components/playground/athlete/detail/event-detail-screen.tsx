@@ -164,11 +164,24 @@ export function EventDetailScreen({ eventId, onBack }: { eventId: string; onBack
           </div>
         )}
 
+        {/* min-w-0 on every flex-1 item here is load-bearing, not
+            decorative: none of these three buttons had it, so each one's
+            icon+text content set its own automatic minimum width (CSS
+            default for a flex item with visible overflow), and the three
+            minimums combined (~313px) didn't fit the row's actual width
+            (~301px on a 375px-wide phone). With nothing able to shrink,
+            the row silently overflowed its own container and the
+            rightmost button (More) spilled ~28px past the phone screen's
+            clipped edge — confirmed by direct measurement. min-w-0 lets
+            the flex algorithm actually shrink them to their fair share;
+            none of the labels use whitespace-nowrap, so if a share ever
+            gets tight the text wraps to a second line instead of
+            overflowing or truncating unreadably. */}
         <div className="flex gap-[var(--space-2)] px-[var(--space-4)] pt-[var(--space-4)]">
           <button
             type="button"
             onClick={handleReserve}
-            className={`flex min-h-[44px] flex-1 items-center justify-center gap-[var(--space-2)] rounded-athlo-md px-[var(--space-3)] font-body font-semibold transition-all ${
+            className={`flex min-h-[44px] min-w-0 flex-1 items-center justify-center gap-[var(--space-2)] rounded-athlo-md px-[var(--space-3)] font-body font-semibold transition-all ${
               isReserved
                 ? "border border-athlo-line-strong bg-athlo-bg-overlay text-athlo-text-primary"
                 : "bg-athlo-lime text-athlo-text-on-lime hover:-translate-y-px hover:shadow-athlo-lime"
@@ -179,7 +192,7 @@ export function EventDetailScreen({ eventId, onBack }: { eventId: string; onBack
           <a
             href={mailHref}
             aria-label={`Contact ${event.organiser?.name ?? event.clubName}`}
-            className="flex min-h-[44px] flex-1 items-center justify-center gap-[var(--space-2)] rounded-athlo-md border border-athlo-line-strong bg-athlo-bg-overlay px-[var(--space-3)] font-body font-semibold text-athlo-text-primary transition-colors hover:border-athlo-text-secondary"
+            className="flex min-h-[44px] min-w-0 flex-1 items-center justify-center gap-[var(--space-2)] rounded-athlo-md border border-athlo-line-strong bg-athlo-bg-overlay px-[var(--space-3)] font-body font-semibold text-athlo-text-primary transition-colors hover:border-athlo-text-secondary"
           >
             <Mail size={16} aria-hidden="true" />
             Contact

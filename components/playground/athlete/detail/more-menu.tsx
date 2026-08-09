@@ -26,7 +26,7 @@ export function MoreMenu({ onSelect }: { onSelect: (item: string) => void }) {
   }, [open]);
 
   return (
-    <div ref={rootRef} className="relative flex-1">
+    <div ref={rootRef} className="relative min-w-0 flex-1">
       <button
         type="button"
         aria-haspopup="menu"
@@ -42,7 +42,16 @@ export function MoreMenu({ onSelect }: { onSelect: (item: string) => void }) {
         <div
           role="menu"
           aria-label="More options"
-          className="absolute bottom-full left-0 z-10 mb-[var(--space-2)] w-full min-w-[160px] overflow-hidden rounded-athlo-md border border-athlo-line-strong bg-athlo-bg-overlay shadow-athlo-pop"
+          // Right-anchored, not left-anchored: this trigger is the
+          // rightmost of three flex-1 buttons in the action row, so its own
+          // width is only ~1/3 of the row — far narrower than this menu's
+          // 160px min-width. Anchoring left-0 let the menu grow rightward
+          // off the trigger, past the phone screen's right edge, where it
+          // was silently clipped by the screen wrapper's overflow-hidden
+          // (confirmed: menu rendered ~63px past the screen boundary).
+          // right-0 grows it leftward instead, into the room the Reserve
+          // and Contact buttons already prove is free.
+          className="absolute bottom-full right-0 z-10 mb-[var(--space-2)] w-full min-w-[160px] overflow-hidden rounded-athlo-md border border-athlo-line-strong bg-athlo-bg-overlay shadow-athlo-pop"
         >
           {ITEMS.map((item) => (
             <button
