@@ -2,11 +2,15 @@ import { Clock, MapPin, Trophy, Wifi } from "lucide-react";
 import type { MockEvent } from "@/lib/playground/types";
 import { formatClosesIn, formatPrice } from "@/lib/playground/format";
 
-export function EventRow({ event }: { event: MockEvent }) {
+export function EventRow({ event, onSelect }: { event: MockEvent; onSelect: (eventId: string) => void }) {
   const isCompetition = event.type === "competition";
 
   return (
-    <div className="flex gap-[var(--space-3)] px-[var(--space-4)] py-[var(--space-4)]">
+    <button
+      type="button"
+      onClick={() => onSelect(event.id)}
+      className="flex w-full gap-[var(--space-3)] px-[var(--space-4)] py-[var(--space-4)] text-left"
+    >
       {event.imageUrl ? (
         <img
           src={event.imageUrl}
@@ -35,8 +39,8 @@ export function EventRow({ event }: { event: MockEvent }) {
         </p>
 
         {/* Density-optimised row: no start time (moves to the event-detail
-            screen, not built yet) and no sport tag (the filters above
-            already carry that context) — maximises events above the fold. */}
+            screen) and no sport tag (the filters above already carry that
+            context) — maximises events above the fold. */}
         <div className="mt-[var(--space-2)] flex flex-col gap-[var(--space-1)]">
           <span className="flex items-center gap-[var(--space-2)] font-body text-athlo-label text-athlo-text-secondary">
             {event.location.isVirtual ? (
@@ -68,6 +72,6 @@ export function EventRow({ event }: { event: MockEvent }) {
           {formatPrice(event.price)}
         </span>
       </div>
-    </div>
+    </button>
   );
 }

@@ -1,11 +1,17 @@
 import type { MockEvent } from "@/lib/playground/types";
 import { formatPrice } from "@/lib/playground/format";
 
-export function EventCardHorizontal({ event }: { event: MockEvent }) {
+export function EventCardHorizontal({
+  event,
+  onSelect,
+}: {
+  event: MockEvent;
+  onSelect: (eventId: string) => void;
+}) {
   const weekday = new Date(`${event.date}T00:00:00`).toLocaleDateString("en-GB", { weekday: "short" });
 
   return (
-    <div className="w-36 shrink-0">
+    <button type="button" onClick={() => onSelect(event.id)} className="w-36 shrink-0 text-left">
       {event.imageUrl ? (
         <img src={event.imageUrl} alt="" className="h-24 w-full rounded-athlo-md object-cover" />
       ) : (
@@ -23,6 +29,6 @@ export function EventCardHorizontal({ event }: { event: MockEvent }) {
       <p className="mt-[var(--space-1)] font-body text-athlo-label font-semibold text-athlo-text-primary">
         {formatPrice(event.price)}
       </p>
-    </div>
+    </button>
   );
 }

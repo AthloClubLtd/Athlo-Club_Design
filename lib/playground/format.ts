@@ -40,3 +40,29 @@ export function formatClosesIn(registrationClosesAt: string): string {
 export function formatPrice(price: number | "free"): string {
   return price === "free" ? "Free" : `£${price}`;
 }
+
+/** Detail-screen date line: "Today · 14 June" / "Tomorrow" / "Saturday, 14
+ * June" — a different string shape than formatDateGroupLabel's list-header
+ * format (that one reads naturally inside a grouped feed; this one stands
+ * alone as its own line), but built on the same day-diff primitive above
+ * so the two never disagree on what "today" means. */
+export function formatEventDateLine(iso: string): string {
+  const diffDays = daysFromToday(iso);
+  const target = new Date(`${iso}T00:00:00`);
+  const day = target.getDate();
+  const month = target.toLocaleDateString("en-GB", { month: "long" });
+
+  if (diffDays === 0) return `Today · ${day} ${month}`;
+  if (diffDays === 1) return "Tomorrow";
+
+  const weekday = target.toLocaleDateString("en-GB", { weekday: "long" });
+  return `${weekday}, ${day} ${month}`;
+}
+
+/** "9:00 AM – 11:00 AM BST" — omits the range dash/timezone gracefully
+ * when the event doesn't specify them. */
+export function formatTimeRange(time?: string, endTime?: string, timezoneLabel?: string): string | undefined {
+  if (!time) return undefined;
+  const range = endTime ? `${time} – ${endTime}` : time;
+  return timezoneLabel ? `${range} ${timezoneLabel}` : range;
+}

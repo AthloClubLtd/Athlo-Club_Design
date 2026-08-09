@@ -21,7 +21,13 @@ function groupByDate(events: MockEvent[]): { label: string; items: MockEvent[] }
   return groups;
 }
 
-export function NearYouList({ events }: { events: MockEvent[] }) {
+export function NearYouList({
+  events,
+  onSelectEvent,
+}: {
+  events: MockEvent[];
+  onSelectEvent: (eventId: string) => void;
+}) {
   const groups = groupByDate(events);
 
   return (
@@ -41,7 +47,7 @@ export function NearYouList({ events }: { events: MockEvent[] }) {
             <DateGroupHeader label={group.label} />
             <div className="divide-y divide-athlo-line-subtle">
               {group.items.map((event) => (
-                <EventRow key={event.id} event={event} />
+                <EventRow key={event.id} event={event} onSelect={onSelectEvent} />
               ))}
             </div>
           </div>

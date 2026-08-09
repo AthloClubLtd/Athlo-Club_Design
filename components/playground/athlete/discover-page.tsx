@@ -19,7 +19,7 @@ const THIS_WEEK_DAYS = 7;
 const TRENDING_COUNT = 5;
 const DEFAULT_RADIUS = 10;
 
-export function DiscoverPage() {
+export function DiscoverPage({ onSelectEvent }: { onSelectEvent: (eventId: string) => void }) {
   const { events, clubs } = useEventsStore();
   const [activeTab, setActiveTab] = useState<DiscoverTabKey>("events");
   const [selectedSports, setSelectedSports] = useState<Set<Sport>>(new Set());
@@ -115,13 +115,13 @@ export function DiscoverPage() {
             aria-labelledby="discover-tab-events"
             className="pt-[var(--space-5)] pb-[var(--space-8)]"
           >
-            <NearYouList events={filteredEvents} />
+            <NearYouList events={filteredEvents} onSelectEvent={onSelectEvent} />
             <SectionShelf
               title="This week"
               subtitle="Next 7 days"
               items={thisWeek}
               getKey={(e) => e.id}
-              renderItem={(e) => <EventCardHorizontal event={e} />}
+              renderItem={(e) => <EventCardHorizontal event={e} onSelect={onSelectEvent} />}
             />
             <SectionShelf
               title="Clubs to follow"
@@ -135,7 +135,7 @@ export function DiscoverPage() {
               subtitle="Popular near you"
               items={trending}
               getKey={(e) => e.id}
-              renderItem={(e) => <EventCardHorizontal event={e} />}
+              renderItem={(e) => <EventCardHorizontal event={e} onSelect={onSelectEvent} />}
             />
           </div>
         )}

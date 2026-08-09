@@ -50,6 +50,44 @@ export type EventLocation = {
   name: string;
   distanceMiles: number;
   isVirtual: boolean;
+  /** Detail screen only — Discover rows only ever show name + distance. */
+  address?: string;
+};
+
+export type SocialLinks = {
+  instagram?: string;
+  x?: string;
+};
+
+export type EventHost = {
+  name: string;
+  /** e.g. "Federation" / "Venue partner" — omitted for a plain event organiser. */
+  roleTag?: string;
+  blurb: string;
+  logoUrl?: string;
+  email: string;
+  socials?: SocialLinks;
+};
+
+export type Ticket = {
+  name: string;
+  detail: string;
+  price: number | "free" | null;
+};
+
+/** Competitions only. */
+export type Division = {
+  name: string;
+  tag: string;
+  description: string;
+  registeredCount: number;
+};
+
+/** Competitions only. */
+export type Leaderboard = {
+  locked: boolean;
+  unlocksLabel: string;
+  unlocksAt: string;
 };
 
 export type MockEvent = {
@@ -67,9 +105,13 @@ export type MockEvent = {
   level: Difficulty;
   /** ISO date (YYYY-MM-DD). */
   date: string;
-  /** ISO time — shown on the event detail screen (not built yet), never
-   * on the density-optimised Discover row. */
+  /** ISO time — shown on the event detail screen, never on the
+   * density-optimised Discover row. */
   time?: string;
+  /** Detail screen only. */
+  endTime?: string;
+  /** Detail screen only, e.g. "BST". */
+  timezoneLabel?: string;
   location: EventLocation;
   price: number | "free";
   /** Placeholder-ok — no seed event sets this yet (no real images
@@ -77,8 +119,33 @@ export type MockEvent = {
   imageUrl?: string;
   goingCount?: number;
   registeredCount?: number;
+  /** Detail screen only — "N from clubs you follow" under the going count. */
+  goingFromFollowedCount?: number;
+  /** Detail screen only. */
+  weatherTempC?: number;
+  weatherIcon?: "sun" | "cloud";
+  /** Detail screen only. */
+  aboutText?: string;
+  /** Detail screen only. */
+  organiser?: EventHost;
+  /** Detail screen only, competitions typically — additional hosts shown
+   * alongside `organiser` in Hosted By. */
+  partners?: EventHost[];
+  /** Detail screen only — Tickets (event) / Entry Fees (competition), same
+   * row shape either way. */
+  tickets?: Ticket[];
   /** Competitions only — ISO date the countdown is computed from. */
   registrationClosesAt?: string;
   /** Competitions only, e.g. ["Open", "Masters", "U23"]. */
   categories?: string[];
+  /** Competitions only, detail screen. */
+  capacity?: number;
+  /** Competitions only, detail screen. */
+  weighInTime?: string;
+  /** Competitions only, detail screen. */
+  liftingFromTime?: string;
+  /** Competitions only, detail screen. */
+  divisions?: Division[];
+  /** Competitions only, detail screen. */
+  leaderboard?: Leaderboard;
 };
