@@ -34,7 +34,7 @@ export function EventRow({ event, onSelect }: { event: MockEvent; onSelect: (eve
           )}
         </div>
 
-        <p className="mt-[var(--space-1)] font-display text-athlo-body-lg font-semibold text-athlo-text-primary">
+        <p className="mt-[var(--space-1)] line-clamp-2 font-display text-athlo-body-lg font-semibold text-athlo-text-primary">
           {event.title}
         </p>
 
