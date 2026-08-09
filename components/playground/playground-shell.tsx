@@ -3,59 +3,19 @@
 import { useState } from "react";
 import { SectionLabel } from "@/components/marketing/ui/section-label";
 import { PhoneFrame } from "@/components/playground/phone-frame";
-import { WebAppFrame } from "@/components/playground/web-app-frame";
-import { FramePlaceholder } from "@/components/playground/frame-placeholder";
 import { PlaygroundToggle, type PlaygroundPanelKey } from "@/components/playground/playground-toggle";
-import { useMediaQuery } from "@/components/playground/use-media-query";
+import { TractionStrip } from "@/components/playground/traction-strip";
 import { EventsProvider } from "@/lib/playground/events-store";
 import { AthletePhoneScreen } from "@/components/playground/athlete/athlete-phone-screen";
-
-function PlaygroundPanel({
-  id,
-  label,
-  isDesktop,
-  isActive,
-  className = "",
-  children,
-}: {
-  id: PlaygroundPanelKey;
-  label: string;
-  isDesktop: boolean;
-  isActive: boolean;
-  className?: string;
-  children: React.ReactNode;
-}) {
-  // Below `pg`, only the toggle-selected panel renders at all — it isn't
-  // just visually hidden, it's removed from the DOM (and so the a11y
-  // tree), so keyboard/AT users can't tab into an off-screen panel.
-  if (!isDesktop && !isActive) return null;
-
-  return (
-    <section
-      id={`playground-panel-${id}`}
-      // The tabpanel/tablist relationship only exists in toggle mode — at
-      // desktop both panels show at once with no tabs controlling them, so
-      // the role and its aria-labelledby link would be meaningless (and
-      // aria-labelledby would point at a toggle that isn't even rendered).
-      role={isDesktop ? undefined : "tabpanel"}
-      aria-labelledby={isDesktop ? undefined : `playground-tab-${id}`}
-      aria-label={isDesktop ? label : undefined}
-      className={className}
-    >
-      <SectionLabel className={isDesktop ? "" : "text-center"}>{label}</SectionLabel>
-      <div className="mt-[var(--space-4)]">{children}</div>
-    </section>
-  );
-}
+import { OrganiserPhoneScreen } from "@/components/playground/organiser/organiser-phone-screen";
 
 export function PlaygroundShell() {
-  const isDesktop = useMediaQuery("(min-width: 980px)");
   const [active, setActive] = useState<PlaygroundPanelKey>("athlete");
 
   return (
-    // Shared by both panels — the organiser "create event" flow (later
-    // phase) writes into the same store the athlete Discover screen reads
-    // from, so a new event appears there immediately.
+    // Shared by both views — the Organiser "create event" flow writes into
+    // the same store the Athlete Discover screen reads from, so a new
+    // event appears there immediately, with zero extra wiring.
     <EventsProvider>
       <div className="mx-auto max-w-[var(--container-wide)] px-[var(--gutter)] py-[var(--space-9)]">
         <div className="mx-auto max-w-2xl text-center">
@@ -64,48 +24,50 @@ export function PlaygroundShell() {
             See Athlo Club from both sides.
           </h1>
           <p className="mt-[var(--space-4)] font-body text-athlo-body-lg text-athlo-text-body">
-            A live look at the product, dropped straight in as a sample athlete —
+            A live look at the product, dropped straight in as a sample athlete or organiser —
             no sign-up. Everything here is seeded demo data; nothing you do is saved.
           </p>
         </div>
 
-        {!isDesktop && (
-          <div className="mt-[var(--space-8)] flex justify-center">
-            <PlaygroundToggle active={active} onChange={setActive} />
-          </div>
-        )}
+        <TractionStrip />
 
-        {/* Flexbox, not CSS Grid — a nested flex+aspect-ratio element (see
-            PhoneFrame) doesn't correctly size when the outer layout is a
-            Grid, even with a definite (non-auto) column: confirmed by
-            testing that the identical flex+aspect-ratio markup resolves
-            correctly on its own and even freshly appended straight to
-            <body>, but not inside this Grid specifically. Flex sidesteps
-            it entirely and is what's actually verified to work. */}
-        <div className={`mt-[var(--space-7)] gap-[var(--space-8)] ${isDesktop ? "flex items-start" : "grid grid-cols-1"}`}>
-          <PlaygroundPanel
-            id="athlete"
-            label="Athlete"
-            isDesktop={isDesktop}
-            isActive={active === "athlete"}
-            className={isDesktop ? "w-[360px] shrink-0" : ""}
-          >
-            <PhoneFrame>
+        <div className="mt-[var(--space-8)] flex flex-col items-center gap-[var(--space-2)]">
+          <span id="playground-switcher-label" className="font-body text-athlo-label font-semibold text-athlo-text-secondary">
+            Viewing as
+          </span>
+          <PlaygroundToggle active={active} onChange={setActive} />
+          {/* Announces the switch for screen-reader users the same way the
+              visible crossfade signals it for sighted ones. */}
+          <p aria-live="polite" className="sr-only">
+            Now viewing as {active === "athlete" ? "Athlete" : "Organiser"}
+          </p>
+        </div>
+
+        <div className="mt-[var(--space-7)] flex justify-center">
+          <PhoneFrame>
+            {/* Both views stay mounted (display:none toggling) — same
+                "keep mounted" pattern as Discover<->Detail — so the
+                Organiser's in-progress create-event form and the Athlete's
+                filters/scroll position both survive a round trip. */}
+            <div
+              role="tabpanel"
+              id="playground-panel-athlete"
+              aria-labelledby="playground-tab-athlete"
+              className="h-full animate-view-crossfade"
+              style={{ display: active === "athlete" ? "block" : "none" }}
+            >
               <AthletePhoneScreen />
-            </PhoneFrame>
-          </PlaygroundPanel>
-
-          <PlaygroundPanel
-            id="organiser"
-            label="Organiser"
-            isDesktop={isDesktop}
-            isActive={active === "organiser"}
-            className={isDesktop ? "min-w-0 flex-1" : ""}
-          >
-            <WebAppFrame>
-              <FramePlaceholder title="Organiser view" note="Built in the next step." />
-            </WebAppFrame>
-          </PlaygroundPanel>
+            </div>
+            <div
+              role="tabpanel"
+              id="playground-panel-organiser"
+              aria-labelledby="playground-tab-organiser"
+              className="h-full animate-view-crossfade"
+              style={{ display: active === "organiser" ? "block" : "none" }}
+            >
+              <OrganiserPhoneScreen />
+            </div>
+          </PhoneFrame>
         </div>
       </div>
     </EventsProvider>

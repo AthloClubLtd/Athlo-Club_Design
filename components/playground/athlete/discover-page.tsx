@@ -5,7 +5,7 @@ import { useEventsStore } from "@/lib/playground/events-store";
 import { DIFFICULTY_FILTERS, RADIUS_FILTERS, type Difficulty, type Sport } from "@/lib/playground/types";
 import { TopBar } from "@/components/playground/athlete/top-bar";
 import { SearchBar } from "@/components/playground/athlete/search-bar";
-import { DiscoverTabs, type DiscoverTabKey } from "@/components/playground/athlete/discover-tabs";
+import { SegmentedTabs } from "@/components/playground/segmented-tabs";
 import { SportFilterChips } from "@/components/playground/athlete/sport-filter-chips";
 import { FilterDropdown } from "@/components/playground/athlete/filter-dropdown";
 import { NearYouList } from "@/components/playground/athlete/near-you-list";
@@ -18,6 +18,12 @@ import { BottomNav } from "@/components/playground/athlete/bottom-nav";
 const THIS_WEEK_DAYS = 7;
 const TRENDING_COUNT = 5;
 const DEFAULT_RADIUS = 10;
+
+type DiscoverTabKey = "events" | "volunteering";
+const DISCOVER_TABS = [
+  { key: "events" as const, label: "Events" },
+  { key: "volunteering" as const, label: "Volunteering" },
+];
 
 export function DiscoverPage({ onSelectEvent }: { onSelectEvent: (eventId: string) => void }) {
   const { events, clubs } = useEventsStore();
@@ -81,7 +87,7 @@ export function DiscoverPage({ onSelectEvent }: { onSelectEvent: (eventId: strin
       <div className="flex flex-col gap-[var(--space-4)] pb-[var(--space-4)]">
         <TopBar />
         <SearchBar value={query} onChange={setQuery} />
-        <DiscoverTabs active={activeTab} onChange={setActiveTab} />
+        <SegmentedTabs tabs={DISCOVER_TABS} active={activeTab} onChange={setActiveTab} ariaLabel="Discover" idPrefix="discover" />
         {activeTab === "events" && (
           <div className="flex flex-col gap-[var(--space-3)]">
             <SportFilterChips selected={selectedSports} onToggle={toggleSport} onSelectAll={clearSports} />

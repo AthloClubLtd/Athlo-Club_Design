@@ -142,10 +142,24 @@ body {
   animation: discover-enter 250ms ease-out;
 }
 
+/* Athlete<->Organiser switch (playground-shell.tsx). Both views stay
+   mounted (display:none toggling, same "keep mounted" pattern as
+   Discover<->Detail) so in-progress form state and scroll position
+   survive a round trip — but unlike that pair, switching views should
+   read as a deliberate crossfade, not a silent swap. Reuses discover-enter's
+   keyframe under a name that describes this trigger instead: browsers
+   restart a CSS animation when its element goes from display:none back to
+   displayed, so simply keeping the class applied on both panels is enough
+   to replay the fade-in on whichever one becomes visible. */
+.animate-view-crossfade {
+  animation: discover-enter 250ms ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-splash-line-in,
   .animate-splash-bg-pulse,
-  .animate-discover-enter {
+  .animate-discover-enter,
+  .animate-view-crossfade {
     animation: none;
   }
 }

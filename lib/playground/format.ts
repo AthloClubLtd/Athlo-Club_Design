@@ -41,6 +41,16 @@ export function formatPrice(price: number | "free"): string {
   return price === "free" ? "Free" : `£${price}`;
 }
 
+/** "14:30" (native <input type="time"> value) -> "2:30 PM" — matches the
+ * display style already used throughout the seed data. */
+export function formatTimeOfDay(hhmm: string): string {
+  const [hoursStr, minutesStr] = hhmm.split(":");
+  const hours = Number(hoursStr);
+  const period = hours >= 12 ? "PM" : "AM";
+  const twelveHour = hours % 12 === 0 ? 12 : hours % 12;
+  return `${twelveHour}:${minutesStr.padStart(2, "0")} ${period}`;
+}
+
 /** Detail-screen date line: "Today · 14 June" / "Tomorrow" / "Saturday, 14
  * June" — a different string shape than formatDateGroupLabel's list-header
  * format (that one reads naturally inside a grouped feed; this one stands

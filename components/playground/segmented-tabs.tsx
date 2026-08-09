@@ -2,37 +2,37 @@
 
 import { useRef } from "react";
 
-export type DiscoverTabKey = "events" | "volunteering";
+export type TabItem<T extends string> = { key: T; label: string };
 
-const TABS: { key: DiscoverTabKey; label: string }[] = [
-  { key: "events", label: "Events" },
-  { key: "volunteering", label: "Volunteering" },
-];
-
-export function DiscoverTabs({
+/** Underlined-tab pattern (roving tabindex, arrow-key nav) shared by
+ * Discover's Events/Volunteering tabs and Organiser's Overview/Events
+ * tabs — one implementation instead of two near-identical ones. */
+export function SegmentedTabs<T extends string>({
+  tabs,
   active,
   onChange,
+  ariaLabel,
+  idPrefix,
 }: {
-  active: DiscoverTabKey;
-  onChange: (key: DiscoverTabKey) => void;
+  tabs: TabItem<T>[];
+  active: T;
+  onChange: (key: T) => void;
+  ariaLabel: string;
+  idPrefix: string;
 }) {
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
     e.preventDefault();
-    const next = e.key === "ArrowRight" ? (index + 1) % TABS.length : (index - 1 + TABS.length) % TABS.length;
-    onChange(TABS[next].key);
+    const next = e.key === "ArrowRight" ? (index + 1) % tabs.length : (index - 1 + tabs.length) % tabs.length;
+    onChange(tabs[next].key);
     tabRefs.current[next]?.focus();
   };
 
   return (
-    <div
-      role="tablist"
-      aria-label="Discover"
-      className="flex gap-[var(--space-5)] border-b border-athlo-line-subtle px-[var(--space-4)]"
-    >
-      {TABS.map((tab, i) => (
+    <div role="tablist" aria-label={ariaLabel} className="flex gap-[var(--space-5)] border-b border-athlo-line-subtle px-[var(--space-4)]">
+      {tabs.map((tab, i) => (
         <button
           key={tab.key}
           ref={(el) => {
@@ -40,9 +40,9 @@ export function DiscoverTabs({
           }}
           type="button"
           role="tab"
-          id={`discover-tab-${tab.key}`}
+          id={`${idPrefix}-tab-${tab.key}`}
           aria-selected={active === tab.key}
-          aria-controls={`discover-panel-${tab.key}`}
+          aria-controls={`${idPrefix}-panel-${tab.key}`}
           tabIndex={active === tab.key ? 0 : -1}
           onClick={() => onChange(tab.key)}
           onKeyDown={(e) => onKeyDown(e, i)}
