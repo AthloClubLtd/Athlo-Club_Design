@@ -48,6 +48,8 @@ const config: Config = {
           lime: "var(--color-lime)",
           "lime-soft": "var(--color-lime-soft)",
           "lime-dim": "var(--color-lime-dim)",
+          "lime-glow": "var(--color-lime-glow)",
+          "lime-tint": "var(--color-lime-tint)",
           "text-primary": "var(--color-text-primary)",
           "text-body": "var(--color-text-body)",
           "text-secondary": "var(--color-text-secondary)",

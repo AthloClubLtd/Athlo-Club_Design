@@ -91,13 +91,18 @@ export function DiscoverPage({ onSelectEvent }: { onSelectEvent: (eventId: strin
         {activeTab === "events" && (
           <div className="flex flex-col gap-[var(--space-3)]">
             <SportFilterChips selected={selectedSports} onToggle={toggleSport} onSelectAll={clearSports} />
-            <div className="flex flex-wrap gap-[var(--space-2)] px-[var(--space-4)]">
+            {/* flex, not flex-wrap: both dropdowns are flex-1/min-w-0 so
+                they always share one row, shrinking their own width
+                (truncating the selected label if it's ever long) instead
+                of wrapping to a second line. */}
+            <div className="flex gap-[var(--space-2)] px-[var(--space-4)]">
               <FilterDropdown
                 id="discover-difficulty"
                 label="Filter by level"
                 options={DIFFICULTY_FILTERS}
                 value={difficulty}
                 onChange={setDifficulty}
+                className="relative min-w-0 flex-1"
               />
               <FilterDropdown
                 id="discover-radius"
@@ -105,6 +110,7 @@ export function DiscoverPage({ onSelectEvent }: { onSelectEvent: (eventId: strin
                 options={RADIUS_FILTERS}
                 value={radius}
                 onChange={setRadius}
+                className="relative min-w-0 flex-1"
               />
             </div>
           </div>

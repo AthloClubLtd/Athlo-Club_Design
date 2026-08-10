@@ -18,7 +18,14 @@ export function EventRow({ event, onSelect }: { event: MockEvent; onSelect: (eve
         ) : (
           // Decorative placeholder — no real event photography supplied yet;
           // the title/club text beside it already carries the information.
-          <div aria-hidden="true" className="h-14 w-14 rounded-athlo-md bg-athlo-bg-overlay" />
+          // A slight lime-tinted gradient reads as "photo placeholder"
+          // rather than empty chrome (an explicit, approved exception to
+          // CLAUDE.md law 1's "lime is never decorative" — every event/
+          // avatar placeholder site-wide carries it, not a one-off accent).
+          <div
+            aria-hidden="true"
+            className="h-14 w-14 rounded-athlo-md bg-gradient-to-br from-athlo-bg-overlay to-athlo-lime-tint"
+          />
         )}
         {/* Icon-only, overlaid on the thumbnail's own fixed-size box rather
             than sharing a row with clubName: a labelled "Competition" chip

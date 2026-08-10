@@ -15,7 +15,12 @@ export function EventCardHorizontal({
       {event.imageUrl ? (
         <img src={event.imageUrl} alt="" className="h-24 w-full rounded-athlo-md object-cover" />
       ) : (
-        <div aria-hidden="true" className="h-24 w-full rounded-athlo-md bg-athlo-bg-overlay" />
+        // Same slight lime-tinted placeholder gradient as EventRow's
+        // thumbnail — kept consistent across every event-image slot.
+        <div
+          aria-hidden="true"
+          className="h-24 w-full rounded-athlo-md bg-gradient-to-br from-athlo-bg-overlay to-athlo-lime-tint"
+        />
       )}
       <p className="mt-[var(--space-2)] truncate font-body text-athlo-label text-athlo-text-secondary">
         {event.clubName}
