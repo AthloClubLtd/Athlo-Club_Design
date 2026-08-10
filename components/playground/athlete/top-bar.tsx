@@ -10,7 +10,7 @@ export function TopBar() {
       {/* Wordmark kept as the full "Athlo Club" lockup (not bare "ATHLO")
           per CLAUDE.md's non-negotiable naming rule, even though the Figma
           reference shows a bare outline wordmark with no visible "Club". */}
-      <AthloClubWordmark imgClassName="h-5 w-auto" textClassName="text-athlo-body" />
+      <AthloClubWordmark imgClassName="h-5 w-auto" textClassName="text-athlo-body" showClub={false} />
       <div className="flex items-center gap-[var(--space-2)]">
         {/* Calendar replaces the old Create/Notifications pair — matches
             the Figma reference's two-button header (calendar + avatar). */}

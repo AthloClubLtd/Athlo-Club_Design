@@ -50,7 +50,7 @@ export function EventRow({ event, onSelect }: { event: MockEvent; onSelect: (eve
       <div className="min-w-0 flex-1">
         <span className="block truncate font-body text-athlo-label text-athlo-text-secondary">{event.clubName}</span>
 
-        <p className="mt-[var(--space-1)] line-clamp-2 font-display text-athlo-body-lg font-semibold text-athlo-text-primary">
+        <p className="mt-[var(--space-1)] line-clamp-2 font-display text-athlo-body font-semibold text-athlo-text-primary">
           {event.title}
         </p>
 
