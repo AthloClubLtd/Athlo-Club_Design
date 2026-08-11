@@ -3,15 +3,7 @@
 import { useEventsStore } from "@/lib/playground/events-store";
 import type { EventHost } from "@/lib/playground/types";
 import { InstagramIcon, XIcon } from "@/components/playground/athlete/detail/social-icons";
-
-function initialsOf(name: string): string {
-  return name
-    .split(" ")
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
-}
+import { ClubAvatar } from "@/components/playground/athlete/club-avatar";
 
 export function HostCard({ host, clubId }: { host: EventHost; clubId?: string }) {
   const { followedClubIds, toggleFollow } = useEventsStore();
@@ -20,12 +12,7 @@ export function HostCard({ host, clubId }: { host: EventHost; clubId?: string })
   return (
     <div className="rounded-athlo-lg border border-athlo-line-subtle bg-athlo-bg-raised p-[var(--space-4)]">
       <div className="flex items-start gap-[var(--space-3)]">
-        <div
-          aria-hidden="true"
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-athlo-md bg-athlo-bg-overlay font-display text-athlo-label font-semibold text-athlo-text-secondary"
-        >
-          {initialsOf(host.name)}
-        </div>
+        <ClubAvatar club={host} />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-[var(--space-2)]">
             <p className="font-display text-athlo-body font-semibold text-athlo-text-primary">{host.name}</p>

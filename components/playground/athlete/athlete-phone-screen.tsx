@@ -4,14 +4,20 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@/components/playground/use-media-query";
 import { DiscoverCurationSplash } from "@/components/playground/athlete/discover-curation-splash";
 import { DiscoverPage } from "@/components/playground/athlete/discover-page";
+import { ClubsPage } from "@/components/playground/athlete/clubs/clubs-page";
 import { EventDetailScreen } from "@/components/playground/athlete/detail/event-detail-screen";
+import type { NavKey } from "@/components/playground/athlete/bottom-nav";
 
 const SPLASH_SEEN_KEY = "playground-athlete-splash-seen";
 
 export function AthletePhoneScreen() {
   const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const [phase, setPhase] = useState<"splash" | "app">("splash");
-  const [screen, setScreen] = useState<"discover" | "detail">("discover");
+  const [screen, setScreen] = useState<"discover" | "clubs" | "detail">("discover");
+  // Which list screen opened the current detail view — Back returns here,
+  // so opening an event from the Clubs carousel comes back to Clubs, not
+  // straight to Discover regardless of where the tap actually came from.
+  const [listScreen, setListScreen] = useState<"discover" | "clubs">("discover");
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
   const appRef = useRef<HTMLDivElement>(null);
 
@@ -54,10 +60,20 @@ export function AthletePhoneScreen() {
   };
 
   const openEvent = (eventId: string) => {
+    if (screen === "discover" || screen === "clubs") setListScreen(screen);
     setSelectedEventId(eventId);
     setScreen("detail");
   };
-  const backToDiscover = () => setScreen("discover");
+  const backToList = () => setScreen(listScreen);
+
+  // Home/Me have no screen to go to yet — a no-op tap, same as the
+  // header's decorative Calendar button elsewhere in the demo.
+  const handleNavigate = (key: NavKey) => {
+    if (key === "discover" || key === "clubs") {
+      setListScreen(key);
+      setScreen(key);
+    }
+  };
 
   if (phase === "splash") {
     return <DiscoverCurationSplash onComplete={handleSplashComplete} />;
@@ -69,17 +85,20 @@ export function AthletePhoneScreen() {
       tabIndex={-1}
       className={`relative h-full outline-none ${reducedMotion ? "" : "animate-discover-enter"}`}
     >
-      {/* Discover stays mounted even while Detail is showing (display:none,
-          not unmounted) — its filters, search and scroll position are all
-          local useState, so unmounting it on every detail-view visit would
-          reset them, breaking "back preserves prior scroll/filters". */}
+      {/* Discover and Clubs both stay mounted even while Detail is showing
+          (display:none, not unmounted) — their filters/search/scroll
+          position are all local useState, so unmounting on every detail
+          visit or every Discover<->Clubs switch would reset them. */}
       <div className="h-full" style={{ display: screen === "discover" ? "block" : "none" }}>
-        <DiscoverPage onSelectEvent={openEvent} />
+        <DiscoverPage onSelectEvent={openEvent} onNavigate={handleNavigate} />
+      </div>
+      <div className="h-full" style={{ display: screen === "clubs" ? "block" : "none" }}>
+        <ClubsPage onSelectEvent={openEvent} onNavigate={handleNavigate} />
       </div>
 
       {screen === "detail" && selectedEventId && (
         <div className="absolute inset-0">
-          <EventDetailScreen eventId={selectedEventId} onBack={backToDiscover} />
+          <EventDetailScreen eventId={selectedEventId} onBack={backToList} />
         </div>
       )}
     </div>

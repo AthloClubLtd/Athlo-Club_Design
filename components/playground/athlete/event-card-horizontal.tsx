@@ -1,5 +1,6 @@
 import type { MockEvent } from "@/lib/playground/types";
 import { formatPrice } from "@/lib/playground/format";
+import { EventThumb } from "@/components/playground/athlete/event-thumb";
 
 export function EventCardHorizontal({
   event,
@@ -12,16 +13,7 @@ export function EventCardHorizontal({
 
   return (
     <button type="button" onClick={() => onSelect(event.id)} className="w-36 shrink-0 text-left">
-      {event.imageUrl ? (
-        <img src={event.imageUrl} alt="" className="h-24 w-full rounded-athlo-md object-cover" />
-      ) : (
-        // Same slight lime-tinted placeholder gradient as EventRow's
-        // thumbnail — kept consistent across every event-image slot.
-        <div
-          aria-hidden="true"
-          className="h-24 w-full rounded-athlo-md bg-gradient-to-br from-athlo-bg-overlay to-athlo-lime-tint"
-        />
-      )}
+      <EventThumb event={event} className="h-24 w-full rounded-athlo-md" />
       <p className="mt-[var(--space-2)] truncate font-body text-athlo-label text-athlo-text-secondary">
         {event.clubName}
       </p>

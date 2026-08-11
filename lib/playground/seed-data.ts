@@ -10,14 +10,136 @@ function isoDateInDays(days: number): string {
 }
 
 /** Sample clubs only — distinct from the real beta-club names used on the
- * Home page, so nothing here reads as a real stat. */
+ * Home page, so nothing here reads as a real stat.
+ *
+ * logoUrl only set where a real file exists in /public/clubs (see the
+ * README there) — everything else falls back to ClubAvatar's initials
+ * tile, same "real asset if present, tasteful fallback if not" pattern
+ * used for event thumbnails. */
 export const mockClubs: Club[] = [
-  { id: "central-staffs-crossfit", name: "Central Staffs CrossFit", location: "Stafford, UK", isPrivateClub: false },
-  { id: "crazy-strength", name: "Crazy Strength", location: "Wolverhampton, UK", isPrivateClub: false },
-  { id: "london-wl-club", name: "London WL Club", location: "London, UK", isPrivateClub: false },
-  { id: "british-powerlifting", name: "British Powerlifting", location: "Staffordshire, UK", isPrivateClub: false },
-  { id: "strong-girls-hq", name: "Strong Girls HQ", location: "London, UK", isPrivateClub: false },
+  {
+    id: "central-staffs-crossfit",
+    name: "Central Staffs CrossFit",
+    location: "Stafford, UK",
+    distanceMiles: 1.2,
+    isPrivateClub: false,
+    logoUrl: "/clubs/central-staffs-crossfit.png",
+    memberCount: 5412,
+    sports: ["crossfit-affiliated", "strongman"],
+    isWomensOnly: false,
+    intensity: "high",
+    type: "gym",
+    isCreatedByUser: false,
+    unreadNotification: { type: "event", label: "New event" },
+  },
+  {
+    id: "crazy-strength",
+    name: "Crazy Strength",
+    location: "Wolverhampton, UK",
+    distanceMiles: 14.5,
+    isPrivateClub: false,
+    logoUrl: "/clubs/crazy-strength.png",
+    memberCount: 640,
+    sports: ["hyrox", "fitness-racing"],
+    isWomensOnly: false,
+    intensity: "moderate",
+    type: "club",
+    isCreatedByUser: false,
+    unreadNotification: null,
+  },
+  {
+    id: "london-wl-club",
+    name: "London WL Club",
+    location: "London, UK",
+    distanceMiles: 2.1,
+    isPrivateClub: false,
+    memberCount: 1204,
+    sports: ["weightlifting"],
+    isWomensOnly: false,
+    intensity: "moderate",
+    type: "club",
+    isCreatedByUser: false,
+    unreadNotification: null,
+  },
+  {
+    id: "british-powerlifting",
+    name: "British Powerlifting",
+    location: "Staffordshire, UK",
+    distanceMiles: 3.4,
+    isPrivateClub: false,
+    logoUrl: "/clubs/british-powerlifting.jpg",
+    memberCount: 3150,
+    sports: ["powerlifting"],
+    isWomensOnly: false,
+    intensity: "moderate",
+    type: "federation",
+    isCreatedByUser: false,
+    unreadNotification: null,
+  },
+  {
+    id: "strong-girls-hq",
+    name: "Strong Girls HQ",
+    location: "London, UK",
+    distanceMiles: 0.8,
+    isPrivateClub: false,
+    memberCount: 860,
+    sports: ["weightlifting"],
+    isWomensOnly: true,
+    intensity: "moderate",
+    type: "club",
+    isCreatedByUser: false,
+    unreadNotification: { type: "post", label: "New post" },
+  },
+  {
+    id: "hackney-women-lift",
+    name: "Hackney Women Lift",
+    location: "London, UK",
+    distanceMiles: 3.5,
+    isPrivateClub: false,
+    memberCount: 318,
+    sports: ["weightlifting"],
+    isWomensOnly: true,
+    intensity: "low",
+    type: "club",
+    isCreatedByUser: false,
+    unreadNotification: null,
+  },
+  {
+    id: "stafford-strongman",
+    name: "Stafford Strongman",
+    location: "Stafford, UK",
+    distanceMiles: 2.0,
+    isPrivateClub: false,
+    memberCount: 210,
+    sports: ["strongman"],
+    isWomensOnly: false,
+    intensity: "high",
+    type: "club",
+    isCreatedByUser: false,
+    unreadNotification: null,
+  },
+  {
+    id: "swathis-strength-collective",
+    name: "Swathi's Strength Collective",
+    location: "London, UK",
+    distanceMiles: 1.5,
+    isPrivateClub: false,
+    memberCount: 42,
+    sports: ["weightlifting", "powerlifting"],
+    isWomensOnly: false,
+    intensity: "moderate",
+    type: "club",
+    isCreatedByUser: true,
+    unreadNotification: null,
+  },
 ];
+
+/** Clubs the mock athlete already follows on first load — matches the
+ * Clubs-screen reference (Central Staffs CrossFit, London WL Club, Strong
+ * Girls HQ all show "Following" there), and drives the "Events from clubs
+ * you follow" carousel + "Clubs you follow" list having real content from
+ * the start rather than an empty demo. */
+export const SEEDED_FOLLOWED_CLUB_IDS = ["central-staffs-crossfit", "london-wl-club", "strong-girls-hq"];
 
 function clubOf(clubId: string): Club {
   const club = mockClubs.find((c) => c.id === clubId);

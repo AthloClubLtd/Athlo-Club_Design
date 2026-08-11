@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useMemo, useState } from "react";
 import type { Club, MockEvent } from "@/lib/playground/types";
-import { mockClubs, seedEvents } from "@/lib/playground/seed-data";
+import { mockClubs, seedEvents, SEEDED_FOLLOWED_CLUB_IDS } from "@/lib/playground/seed-data";
 
 export type MockAthlete = {
   name: string;
@@ -41,7 +41,7 @@ const EventsContext = createContext<EventsContextValue | null>(null);
 export function EventsProvider({ children }: { children: React.ReactNode }) {
   const [events, setEvents] = useState<MockEvent[]>(seedEvents);
   const [clubs] = useState<Club[]>(mockClubs);
-  const [followedClubIds, setFollowedClubIds] = useState<Set<string>>(new Set());
+  const [followedClubIds, setFollowedClubIds] = useState<Set<string>>(new Set(SEEDED_FOLLOWED_CLUB_IDS));
   const [reservedEventIds, setReservedEventIds] = useState<Set<string>>(new Set());
 
   const value = useMemo<EventsContextValue>(

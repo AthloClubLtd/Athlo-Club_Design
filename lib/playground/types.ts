@@ -42,8 +42,23 @@ export type Club = {
   id: string;
   name: string;
   location: string;
+  /** Separate from the display string above so "near you" sorting/filtering
+   * has a real number to work with, the same way MockEvent's location does. */
+  distanceMiles: number;
   /** Private clubs' events are excluded from public Discover listings. */
   isPrivateClub: boolean;
+  /** Real club logo file when one exists (see /public/clubs) — ClubAvatar
+   * falls back to an initials tile when this is unset. */
+  logoUrl?: string;
+  memberCount: number;
+  sports: Sport[];
+  isWomensOnly: boolean;
+  intensity: "low" | "moderate" | "high";
+  type: "club" | "federation" | "gym";
+  /** The Clubs screen's "Your Clubs" list — clubs the mock athlete created,
+   * not just follows. */
+  isCreatedByUser: boolean;
+  unreadNotification: { type: "event" | "post"; label: string } | null;
 };
 
 export type EventLocation = {

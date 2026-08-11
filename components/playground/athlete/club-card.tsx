@@ -2,15 +2,7 @@
 
 import { useEventsStore } from "@/lib/playground/events-store";
 import type { Club } from "@/lib/playground/types";
-
-function initialsOf(name: string): string {
-  return name
-    .split(" ")
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
-}
+import { ClubAvatar } from "@/components/playground/athlete/club-avatar";
 
 export function ClubCard({ club }: { club: Club }) {
   // Shared with the store (not local state) so following a club here and
@@ -20,12 +12,7 @@ export function ClubCard({ club }: { club: Club }) {
 
   return (
     <div className="flex w-36 shrink-0 flex-col items-center rounded-athlo-lg border border-athlo-line-subtle bg-athlo-bg-raised p-[var(--space-4)] text-center">
-      <div
-        aria-hidden="true"
-        className="flex h-12 w-12 items-center justify-center rounded-athlo-md bg-athlo-bg-overlay font-display text-athlo-label font-semibold text-athlo-text-secondary"
-      >
-        {initialsOf(club.name)}
-      </div>
+      <ClubAvatar club={club} />
       <p className="mt-[var(--space-3)] font-display text-athlo-body font-semibold text-athlo-text-primary">
         {club.name}
       </p>

@@ -1,6 +1,7 @@
 import { ChevronLeft, Share2, Trophy } from "lucide-react";
 import { SPORT_FILTERS } from "@/lib/playground/types";
 import { SPORT_ICONS } from "@/components/playground/athlete/sport-icons";
+import { EventThumb } from "@/components/playground/athlete/event-thumb";
 import type { MockEvent } from "@/lib/playground/types";
 
 export function EventDetailHero({
@@ -21,11 +22,7 @@ export function EventDetailHero({
 
   return (
     <div className="relative">
-      {event.imageUrl ? (
-        <img src={event.imageUrl} alt="" className="h-48 w-full object-cover" />
-      ) : (
-        <div aria-hidden="true" className="h-48 w-full bg-athlo-bg-overlay" />
-      )}
+      <EventThumb event={event} className="h-48 w-full" />
 
       <button
         type="button"

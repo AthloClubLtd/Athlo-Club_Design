@@ -10,11 +10,22 @@ const ITEMS = [
   { key: "me", label: "Me", icon: User, disabled: false },
 ] as const;
 
-export function BottomNav({ active }: { active: (typeof ITEMS)[number]["key"] }) {
+export type NavKey = (typeof ITEMS)[number]["key"];
+
+export function BottomNav({
+  active,
+  onNavigate,
+}: {
+  active: NavKey;
+  /** Home/Me have no screen to go to yet — tapping them is a harmless
+   * no-op if the caller doesn't handle those keys, same as the existing
+   * decorative header buttons (Calendar) elsewhere in the demo. */
+  onNavigate: (key: NavKey) => void;
+}) {
   return (
     <nav
       aria-label="Athlete"
-      className="flex items-stretch justify-between border-t border-athlo-line-subtle bg-athlo-bg-raised px-[var(--space-2)]"
+      className="flex items-stretch justify-evenly gap-[var(--space-1)] border-t border-athlo-line-subtle bg-athlo-bg-raised px-[var(--space-3)]"
     >
       {ITEMS.map((item) => {
         const Icon = item.icon;
@@ -24,9 +35,10 @@ export function BottomNav({ active }: { active: (typeof ITEMS)[number]["key"] })
             key={item.key}
             type="button"
             disabled={item.disabled}
+            onClick={() => onNavigate(item.key)}
             aria-current={isActive ? "page" : undefined}
             aria-label={item.disabled ? `${item.label} — coming soon` : item.label}
-            className={`flex min-h-[44px] min-w-[44px] flex-1 flex-col items-center justify-center gap-[var(--space-1)] py-[var(--space-2)] font-body text-athlo-label transition-colors ${
+            className={`flex min-h-[44px] min-w-[44px] flex-1 flex-col items-center justify-center gap-[var(--space-1)] px-[var(--space-1)] py-[var(--space-3)] font-body text-athlo-label transition-colors ${
               item.disabled
                 ? "cursor-not-allowed text-athlo-text-disabled"
                 : isActive

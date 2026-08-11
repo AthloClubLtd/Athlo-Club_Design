@@ -13,7 +13,7 @@ import { SectionShelf } from "@/components/playground/athlete/section-shelf";
 import { EventCardHorizontal } from "@/components/playground/athlete/event-card-horizontal";
 import { ClubCard } from "@/components/playground/athlete/club-card";
 import { VolunteeringEmptyState } from "@/components/playground/athlete/volunteering-empty-state";
-import { BottomNav } from "@/components/playground/athlete/bottom-nav";
+import { BottomNav, type NavKey } from "@/components/playground/athlete/bottom-nav";
 
 const THIS_WEEK_DAYS = 7;
 const TRENDING_COUNT = 5;
@@ -25,7 +25,13 @@ const DISCOVER_TABS = [
   { key: "volunteering" as const, label: "Volunteering" },
 ];
 
-export function DiscoverPage({ onSelectEvent }: { onSelectEvent: (eventId: string) => void }) {
+export function DiscoverPage({
+  onSelectEvent,
+  onNavigate,
+}: {
+  onSelectEvent: (eventId: string) => void;
+  onNavigate: (key: NavKey) => void;
+}) {
   const { events, clubs } = useEventsStore();
   const [activeTab, setActiveTab] = useState<DiscoverTabKey>("events");
   const [selectedSports, setSelectedSports] = useState<Set<Sport>>(new Set());
@@ -86,7 +92,13 @@ export function DiscoverPage({ onSelectEvent }: { onSelectEvent: (eventId: strin
           the Dynamic Island safe-area clearance for every screen. */}
       <div className="flex flex-col gap-[var(--space-4)] pb-[var(--space-4)]">
         <TopBar />
-        <SearchBar value={query} onChange={setQuery} />
+        <SearchBar
+          id="discover-search"
+          label="Search events, clubs, sports"
+          placeholder="Search events, clubs, sports"
+          value={query}
+          onChange={setQuery}
+        />
         <SegmentedTabs tabs={DISCOVER_TABS} active={activeTab} onChange={setActiveTab} ariaLabel="Discover" idPrefix="discover" />
         {activeTab === "events" && (
           <div className="flex flex-col gap-[var(--space-3)]">
@@ -153,7 +165,7 @@ export function DiscoverPage({ onSelectEvent }: { onSelectEvent: (eventId: strin
         )}
       </div>
 
-      <BottomNav active="discover" />
+      <BottomNav active="discover" onNavigate={onNavigate} />
     </div>
   );
 }

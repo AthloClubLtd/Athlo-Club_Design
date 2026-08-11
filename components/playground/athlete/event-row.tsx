@@ -2,6 +2,7 @@ import { Clock, MapPin, Trophy, Wifi } from "lucide-react";
 import type { MockEvent } from "@/lib/playground/types";
 import { formatClosesIn, formatPrice } from "@/lib/playground/format";
 import { AttendeeAvatars } from "@/components/playground/athlete/detail/attendee-avatars";
+import { EventThumb } from "@/components/playground/athlete/event-thumb";
 
 export function EventRow({ event, onSelect }: { event: MockEvent; onSelect: (eventId: string) => void }) {
   const isCompetition = event.type === "competition";
@@ -13,20 +14,7 @@ export function EventRow({ event, onSelect }: { event: MockEvent; onSelect: (eve
       className="flex w-full gap-[var(--space-3)] px-[var(--space-4)] py-[var(--space-4)] text-left"
     >
       <div className="relative h-14 w-14 shrink-0">
-        {event.imageUrl ? (
-          <img src={event.imageUrl} alt="" className="h-14 w-14 rounded-athlo-md object-cover" />
-        ) : (
-          // Decorative placeholder — no real event photography supplied yet;
-          // the title/club text beside it already carries the information.
-          // A slight lime-tinted gradient reads as "photo placeholder"
-          // rather than empty chrome (an explicit, approved exception to
-          // CLAUDE.md law 1's "lime is never decorative" — every event/
-          // avatar placeholder site-wide carries it, not a one-off accent).
-          <div
-            aria-hidden="true"
-            className="h-14 w-14 rounded-athlo-md bg-gradient-to-br from-athlo-bg-overlay to-athlo-lime-tint"
-          />
-        )}
+        <EventThumb event={event} className="h-14 w-14 shrink-0 rounded-athlo-md" />
         {/* Icon-only, overlaid on the thumbnail's own fixed-size box rather
             than sharing a row with clubName: a labelled "Competition" chip
             here is wider (~134px) than the middle column ever has to give
