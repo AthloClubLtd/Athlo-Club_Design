@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { SectionLabel } from "@/components/marketing/ui/section-label";
 import { Button } from "@/components/marketing/ui/button";
 import { ProductScreenshotPlaceholder } from "@/components/marketing/product-screenshot-placeholder";
@@ -10,6 +11,14 @@ type CardContent = {
   label: string;
   subtitle: string;
   alt: string;
+  /** Real screenshot, when one exists — cards without it keep rendering
+   * ProductScreenshotPlaceholder unchanged (the organiser side has none
+   * yet). width/height are the file's real intrinsic pixels, not a
+   * design choice — next/image uses them to reserve the exact aspect
+   * ratio, so nothing ever crops or letterboxes against a mismatched box. */
+  imageSrc?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 };
 
 const ORGANISER_CARDS: CardContent[] = [
@@ -37,23 +46,31 @@ const ORGANISER_CARDS: CardContent[] = [
 
 const ATHLETE_CARDS: CardContent[] = [
   {
-    title: "Discovery",
+    title: "Discover events, competitions & clubs near you",
     label: "Discovery",
-    subtitle: "Find clubs and comps near you, in your sport.",
-    alt: "TODO: screenshot of the Athlo Club discover page showing nearby clubs and competitions by sport",
+    subtitle: "Find clubs, competitions and events near you, in your sport.",
+    alt: "Athlo Club app screen showing nearby strength events, competitions and clubs, filterable by sport and level.",
+    imageSrc: "/home/athlete-1.jpg",
+    imageWidth: 1092,
+    imageHeight: 2475,
   },
   {
-    title: "Build your profile",
-    label: "Athlete profile",
-    subtitle:
-      "One athlete profile across every strength sport — verified lifts, scores and rankings that follow you everywhere.",
-    alt: "TODO: screenshot of an athlete's Athlo Club profile showing verified lifts, scores and rankings",
+    title: "Follow clubs & build your community",
+    label: "Community",
+    subtitle: "Follow the clubs you train with and stay in the loop on what they're running next.",
+    alt: "Athlo Club athlete profile screen showing followers, following count, and a verified weightlifting personal-best card.",
+    imageSrc: "/home/athlete-2.jpg",
+    imageWidth: 1092,
+    imageHeight: 2475,
   },
   {
-    title: "Track your progress",
+    title: "Track your progress and unlock offers",
     label: "Progress",
-    subtitle: "Every competition, result and PB in one place.",
-    alt: "TODO: screenshot of an athlete's progress view showing competition history, results and personal bests",
+    subtitle: "Build your strength profile, earn badges and unlock new challenges, clubs and offers.",
+    alt: "Athlo Club progress screen showing a strength profile percentage, earned challenges and badges.",
+    imageSrc: "/home/athlete-3.jpg",
+    imageWidth: 1092,
+    imageHeight: 2475,
   },
 ];
 
@@ -119,7 +136,34 @@ export function HowItWorks() {
       >
         {activeTab.cards.map((card) => (
           <div key={card.title}>
-            <ProductScreenshotPlaceholder alt={card.alt} label={card.label} />
+            {card.imageSrc && card.imageWidth && card.imageHeight ? (
+              // Portrait wrapper sized to the file's own ratio (not forced
+              // into the placeholder's landscape aspect-[4/3]) — object-contain
+              // inside a box that already matches the image's ratio never
+              // needs to crop or letterbox. max-w caps it on wide desktop
+              // columns so a 2475px-tall screenshot doesn't dominate the row;
+              // below that it scales down with the grid column on its own.
+              <div className="mx-auto w-full max-w-[300px] overflow-hidden rounded-athlo-xl border border-athlo-line-subtle bg-athlo-bg-raised">
+                {/* aspect-[1092/2475] is a literal class, not templated from
+                    card.imageWidth/imageHeight — Tailwind's JIT scanner only
+                    picks up class names that appear as literal text in the
+                    source, so a runtime-interpolated aspect-[] would silently
+                    generate no CSS. All three athlete images share this exact
+                    ratio today; a future image with a different ratio needs
+                    its own literal aspect-[] class alongside this one. */}
+                <div className="relative aspect-[1092/2475] w-full">
+                  <Image
+                    src={card.imageSrc}
+                    alt={card.alt}
+                    fill
+                    sizes="(min-width: 1024px) 300px, (min-width: 768px) 45vw, 90vw"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            ) : (
+              <ProductScreenshotPlaceholder alt={card.alt} label={card.label} />
+            )}
             <h3 className="mt-[var(--space-5)] font-display text-athlo-h3 font-semibold text-athlo-text-primary">
               {card.title}
             </h3>
