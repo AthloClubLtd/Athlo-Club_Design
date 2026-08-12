@@ -58,7 +58,7 @@ const ATHLETE_CARDS: CardContent[] = [
     title: "Follow clubs & build your community",
     label: "Community",
     subtitle: "Follow the clubs you train with and stay in the loop on what they're running next.",
-    alt: "Athlo Club athlete profile screen showing followers, following count, and a verified weightlifting personal-best card.",
+    alt: "Athlo Club My Clubs screen showing a club the athlete created, and a list of followed clubs with member counts and new-activity notifications.",
     imageSrc: "/home/athlete-2.jpg",
     imageWidth: 1092,
     imageHeight: 2475,
