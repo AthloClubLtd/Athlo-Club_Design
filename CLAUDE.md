@@ -136,7 +136,7 @@ Responsive: wraps and rescales on mobile.
 **§3 About / the problem** — four first-person beats (statement + support line,
 one lime word each):
 1. About Athlo Club — "Create your community, and grow it." / "Everything you
-   need to run your club in one platform — 7+ tools, replaced by one."
+   need to run your club in one platform — 5+ tools, replaced by one."
 2. What you get — "Everything you need to run your events — without the seven
    tabs." / "Registration, payments, scoring and live leaderboards, end to end."
 3. What your athletes get — "A home for their whole strength journey." / "One
@@ -165,7 +165,7 @@ small headshot slot + name/role + story image (B&W) + one short paragraph.
   two months to find a women's powerlifting community. Endurance had a home.
   Strength didn't."
 - Tom Hunt — Chief Growth Officer — "Runs a gym across three strength sports.
-  Used 7+ tools to put on one event, and spent on ads that never reached the
+  Used 5+ tools to put on one event, and spent on ads that never reached the
   right athletes. He knew what organisers needed — he was one."
 Only these two founders on the site.
 

@@ -3,15 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import AudienceToggle from "@/components/audience-toggle";
 
-const links = [
-  { href: "/discover", label: "Discover" },
-  { href: "/for-organisers", label: "For Organisers" },
-  { href: "/for-athletes", label: "For Athletes" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/blog", label: "Blog" },
-];
+const links = [{ href: "/discover", label: "Discover" }];
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -51,7 +44,6 @@ export default function MobileNav() {
             ))}
           </div>
           <div className="mt-4 flex flex-col gap-3 border-t border-white/10 pt-4">
-            <AudienceToggle />
             {isSignedIn ? (
               <Link
                 href="/app"

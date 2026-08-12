@@ -4,7 +4,7 @@ import { HeroFlipbook } from "@/components/marketing/hero-flipbook";
 import { ClubPreviewStack } from "@/components/marketing/club-preview-stack";
 import { LogoWall } from "@/components/marketing/logo-wall";
 import { AboutBlock } from "@/components/marketing/about-block";
-import { ImagePlaceholder } from "@/components/marketing/image-placeholder";
+import { ContainedImage } from "@/components/marketing/contained-image";
 import { ToolPills } from "@/components/marketing/tool-pills";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { FounderStory } from "@/components/marketing/founder-story";
@@ -60,10 +60,15 @@ export default function Home() {
               Create your community, <span className="text-athlo-lime">and grow it.</span>
             </>
           }
-          subtitle="Everything you need to run your club in one platform — 7+ tools, replaced by one."
+          subtitle="All the tools to build and retain your community."
           imageSide="right"
           image={
-            <ImagePlaceholder alt="TODO: a club's public Athlo Club profile page — branding, members and upcoming events" />
+            <ContainedImage
+              src="/home/about-progress.jpg"
+              alt="Athlo Club progress screen showing a strength profile percentage, earned challenges and badges."
+              ratioClassName="aspect-[1092/2475]"
+              className="mx-auto max-w-[300px]"
+            />
           }
         />
 
@@ -74,27 +79,16 @@ export default function Home() {
               Goodbye to <span className="text-athlo-lime">the patchwork.</span>
             </>
           }
-          subtitle="7+ tools in 1."
+          subtitle="Everything you need to run your events, without the 5+ tabs."
           imageSide="left"
           image={
-            <ImagePlaceholder alt="TODO: illustration of Eventbrite, spreadsheets, WhatsApp and other scattered tools consolidating into the Athlo Club platform" />
+            <ContainedImage
+              src="/home/goodbye-patchwork.jpg"
+              alt="Logos of the scattered tools Athlo Club replaces — Squarespace, Mailchimp, WhatsApp, Excel and more — around the Athlo Club wordmark."
+              ratioClassName="aspect-[1254/1128]"
+            />
           }
           extra={<ToolPills />}
-        />
-
-        <AboutBlock
-          caption="What you get"
-          title={
-            <>
-              Everything you need to run your events,{" "}
-              <span className="text-athlo-lime">without the 7+ tabs.</span>
-            </>
-          }
-          subtitle="Build, grow and retain your strength community in one place."
-          imageSide="right"
-          image={
-            <ImagePlaceholder alt="TODO: the Athlo Club event dashboard — registration, payments, scoring and live leaderboard in one screen" />
-          }
         />
       </div>
 

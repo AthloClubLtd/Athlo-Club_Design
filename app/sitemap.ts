@@ -1,22 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getAllClubSlugs, getAllEventSlugs } from "@/lib/discover";
-import { getAllSlugs as getAllBlogSlugs } from "@/lib/blog";
 
 const BASE_URL = "https://athloclub.com";
 
-const STATIC_ROUTES = [
-  "",
-  "/discover",
-  "/for-organisers",
-  "/for-athletes",
-  "/pricing",
-  "/investors",
-  "/about",
-  "/privacy",
-  "/terms",
-  "/cookies",
-  "/blog",
-];
+const STATIC_ROUTES = ["", "/discover", "/investors", "/about", "/privacy", "/terms", "/cookies"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -26,11 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: now,
   }));
 
-  const [eventSlugs, clubSlugs, blogSlugs] = await Promise.all([
-    getAllEventSlugs(),
-    getAllClubSlugs(),
-    Promise.resolve(getAllBlogSlugs()),
-  ]);
+  const [eventSlugs, clubSlugs] = await Promise.all([getAllEventSlugs(), getAllClubSlugs()]);
 
   const eventEntries: MetadataRoute.Sitemap = eventSlugs.map((slug) => ({
     url: `${BASE_URL}/discover/events/${slug}`,
@@ -42,10 +25,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: now,
   }));
 
-  const blogEntries: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
-    url: `${BASE_URL}/blog/${slug}`,
-    lastModified: now,
-  }));
-
-  return [...staticEntries, ...eventEntries, ...clubEntries, ...blogEntries];
+  return [...staticEntries, ...eventEntries, ...clubEntries];
 }

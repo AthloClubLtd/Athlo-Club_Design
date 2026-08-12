@@ -24,7 +24,7 @@ export function FounderStory() {
         <FounderCard
           name="Tom Hunt"
           role="Chief Growth Officer · Coach & gym owner"
-          paragraph="Runs a gym across three strength sports. Used 7+ tools to put on one event, and spent on ads that never reached the right athletes."
+          paragraph="Runs a gym across three strength sports. Used 5+ tools to put on one event, and spent on ads that never reached the right athletes."
           headshotAlt="Tom Hunt, Chief Growth Officer of Athlo Club"
           headshotSrc="/assets/team/tom-headshot.jpg"
           imageAlt="Tom Hunt speaking at a gym event, and a competitor lifting a barbell overhead at a strength competition"

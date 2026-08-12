@@ -53,7 +53,10 @@ export default function MarketingNav() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-[var(--container-wide)] items-center justify-between px-[var(--gutter)]">
-        <AthloClubWordmark href="/" />
+        {/* Header logo reads "ATHLO" only (no "Club" suffix) — an explicit,
+            requested exception scoped to the header; the footer's own
+            AthloClubWordmark call is untouched and still shows "Club". */}
+        <AthloClubWordmark href="/" showClub={false} />
 
         <div className="hidden items-center gap-[var(--space-7)] md:flex">
           <nav className="flex items-center gap-[var(--space-7)]">

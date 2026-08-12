@@ -1,5 +1,5 @@
-// Brief copy says "7+ tools" but names exactly 6 to replace — flagged to the
-// user rather than silently inventing a 7th. Listing exactly what was given.
+// Copy says "5+ tools" — 6 named here, so the claim holds without inventing
+// anything beyond what was given.
 const REPLACED_TOOLS = ["Eventbrite", "Spreadsheets", "WhatsApp", "owlcms", "Mailchimp", "Instagram"];
 
 export function ToolPills() {

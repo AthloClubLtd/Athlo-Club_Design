@@ -40,11 +40,7 @@ export default function TermsPage() {
           Clubs and organisers using Athlo to sell event tickets or
           competition entries must onboard a connected payment account via
           our payment processor. Athlo deducts an application fee from each
-          transaction as described on our{" "}
-          <a href="/pricing" className="text-lime underline">
-            Pricing
-          </a>{" "}
-          page (4% per event ticket; 4% + £1.50 per competition entry).
+          transaction (4% per event ticket; 4% + £1.50 per competition entry).
           Federation-type clubs may approve affiliation requests from other
           clubs; this creates no agency or employment relationship between
           Athlo and any club.

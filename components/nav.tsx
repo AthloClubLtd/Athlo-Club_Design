@@ -1,15 +1,8 @@
 import Link from "next/link";
-import AudienceToggle from "@/components/audience-toggle";
 import MobileNav from "@/components/mobile-nav";
 import NavAuthActions from "@/components/nav-auth-actions";
 
-const links = [
-  { href: "/discover", label: "Discover" },
-  { href: "/for-organisers", label: "For Organisers" },
-  { href: "/for-athletes", label: "For Athletes" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/blog", label: "Blog" },
-];
+const links = [{ href: "/discover", label: "Discover" }];
 
 export default function Nav() {
   return (
@@ -32,7 +25,6 @@ export default function Nav() {
         </nav>
 
         <div className="hidden items-center gap-4 md:flex">
-          <AudienceToggle />
           <NavAuthActions />
         </div>
 

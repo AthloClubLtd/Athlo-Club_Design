@@ -3,19 +3,13 @@ import Link from "next/link";
 const columns: { heading: string; links: { href: string; label: string }[] }[] = [
   {
     heading: "Product",
-    links: [
-      { href: "/discover", label: "Discover" },
-      { href: "/for-organisers", label: "For Organisers" },
-      { href: "/for-athletes", label: "For Athletes" },
-      { href: "/pricing", label: "Pricing" },
-    ],
+    links: [{ href: "/discover", label: "Discover" }],
   },
   {
     heading: "Company",
     links: [
       { href: "/about", label: "About" },
       { href: "/investors", label: "Investors" },
-      { href: "/blog", label: "Blog" },
     ],
   },
   {
