@@ -31,8 +31,8 @@ export default function Home() {
             powerlifting, Hyrox, CrossFit and fitness Racing.
           </p>
           <div className="mt-[var(--space-7)] flex flex-wrap items-center gap-[var(--space-6)]">
-            <Button href="/join" variant="primary">
-              Join as a club
+            <Button href="https://form.typeform.com/to/oX65OdeW?utm_content=xxxxx" variant="primary">
+              Join the waitlist
             </Button>
             <Button href="/discover" variant="ghost">
               Explore events and competitions →

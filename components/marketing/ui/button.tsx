@@ -22,6 +22,22 @@ export function Button({
   href: string;
   children: React.ReactNode;
 }) {
+  // External destinations (Typeforms etc.) open in a new tab — detected
+  // from the href itself rather than a separate prop, so every current
+  // and future external CTA gets this automatically.
+  if (href.startsWith("http")) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${variantClasses[variant]} ${className}`.trim()}
+      >
+        {children}
+      </a>
+    );
+  }
+
   return (
     <Link href={href} className={`${variantClasses[variant]} ${className}`.trim()}>
       {children}

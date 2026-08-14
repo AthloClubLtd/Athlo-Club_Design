@@ -12,9 +12,9 @@ type CardContent = {
   subtitle: string;
   alt: string;
   /** Real screenshot, when one exists — cards without it keep rendering
-   * ProductScreenshotPlaceholder unchanged (the organiser side has none
-   * yet). All three current athlete images share the same 1092x2475
-   * ratio, hence the shared literal ratioClassName below. */
+   * ProductScreenshotPlaceholder unchanged. All six current cards' images
+   * share the same 1092x2475 ratio, hence the shared literal
+   * ratioClassName below. */
   imageSrc?: string;
 };
 
@@ -24,20 +24,23 @@ const ORGANISER_CARDS: CardContent[] = [
     label: "Unified events & scoring",
     subtitle:
       "Templates for weightlifting, powerlifting, fitness racing and Hyrox — or build your own scoring logic.",
-    alt: "TODO: screenshot of the Athlo Club organiser dashboard showing unified event and scoring templates",
+    alt: "Athlo Club create-event screen showing scoring templates for weightlifting, powerlifting and fitness racing.",
+    imageSrc: "/home/organiser-1.png",
   },
   {
     title: "End-to-end event management",
     label: "Event management",
     subtitle:
       "Ticketing, registration, athlete management, live leaderboards and results — the whole competition in one place.",
-    alt: "TODO: screenshot of the Athlo Club event management screen showing ticketing, registration and live leaderboards",
+    alt: "Athlo Club club profile screen showing upcoming events with registration counts and a live competition.",
+    imageSrc: "/home/organiser-2.png",
   },
   {
     title: "Targeted athlete reach",
     label: "Athlete reach",
     subtitle: "Reach athletes matched by sport, skill level and location — not just whoever finds your Instagram.",
-    alt: "TODO: screenshot of Athlo Club's athlete reach tools showing targeting by sport, skill level and location",
+    alt: "Athlo Club map view showing nearby events and clubs pinned by location for targeted athlete discovery.",
+    imageSrc: "/home/organiser-3.png",
   },
 ];
 
@@ -140,7 +143,7 @@ export function HowItWorks() {
             ) : (
               <ProductScreenshotPlaceholder alt={card.alt} label={card.label} />
             )}
-            <h3 className="mt-[var(--space-5)] font-display text-athlo-h3 font-semibold text-athlo-text-primary">
+            <h3 className="mt-[var(--space-5)] font-display text-athlo-h2 font-bold text-athlo-accent-soft">
               {card.title}
             </h3>
             <p className="mt-[var(--space-2)] font-body text-athlo-body text-athlo-text-body">{card.subtitle}</p>

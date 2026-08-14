@@ -1,5 +1,4 @@
-// TODO: replace with the real "Join as a club" Typeform URL once supplied.
-const JOIN_TYPEFORM_URL = "#";
+const JOIN_TYPEFORM_URL = "https://form.typeform.com/to/oX65OdeW?utm_content=xxxxx";
 
 export function LimeCTABand() {
   return (
@@ -21,7 +20,7 @@ export function LimeCTABand() {
           rel="noopener noreferrer"
           className="inline-flex min-h-[44px] items-center justify-center rounded-athlo-md bg-athlo-bg-base px-[var(--space-6)] py-[var(--space-3)] font-body font-semibold text-athlo-lime transition-transform hover:-translate-y-px"
         >
-          Join as a club
+          Join the waitlist
         </a>
       </div>
     </section>

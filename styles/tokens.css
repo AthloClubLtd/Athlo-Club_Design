@@ -28,6 +28,10 @@
   --color-lime-dim:     #9BB534;  /* pressed / depth */
   --color-lime-glow:    rgba(213,248,68,0.14);
   --color-lime-tint:    rgba(213,248,68,0.08);
+  /* Distinct from --color-lime — a muted accent for emphasis text that
+     isn't a CTA/live-state signal (e.g. How-it-works feature titles),
+     so lime itself stays reserved for "act"/"live" per brand law 1. */
+  --color-accent-soft:  #D4E89A;
 
   /* ---- COLOR / TEXT -------------------------------------- */
   --color-text-primary:   #F4F5F0;

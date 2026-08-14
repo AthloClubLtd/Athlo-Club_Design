@@ -7,13 +7,32 @@ import { AthloClubWordmark } from "@/components/marketing/ui/athlo-club-wordmark
 const links = [
   { href: "/discover", label: "Discover events" },
   { href: "/playground", label: "Playground" },
-  { href: "/investors", label: "Investor enquiries" },
+  { href: "https://form.typeform.com/to/G77nDjXy", label: "Investor enquiries" },
 ];
+
+/** Renders an external link (Typeform etc.) as a plain anchor that opens in
+ * a new tab, or an internal route via next/link — same distinction the
+ * Button component makes, needed here too now that Investor enquiries
+ * points off-site. */
+function NavLink({ href, className, onClick, children }: { href: string; className: string; onClick?: () => void; children: React.ReactNode }) {
+  if (href.startsWith("http")) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={className} onClick={onClick}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className} onClick={onClick}>
+      {children}
+    </Link>
+  );
+}
 
 // Not the primary CTA — the hero owns that (brand law 2: one lime action per
 // screen). This is the Secondary button treatment (bordered, no lime fill),
 // which is as prominent as this can be without a second primary action.
-function ClubLoginLink({ className = "" }: { className?: string }) {
+function AthleteLoginLink({ className = "" }: { className?: string }) {
   return (
     <Link
       href="/login"
@@ -28,7 +47,7 @@ function ClubLoginLink({ className = "" }: { className?: string }) {
           strokeLinejoin="round"
         />
       </svg>
-      Club login
+      Athlete login
     </Link>
   );
 }
@@ -54,23 +73,23 @@ export default function MarketingNav() {
     >
       <div className="mx-auto flex h-16 max-w-[var(--container-wide)] items-center justify-between px-[var(--gutter)]">
         {/* Header logo reads "ATHLO" only (no "Club" suffix) — an explicit,
-            requested exception scoped to the header; the footer's own
-            AthloClubWordmark call is untouched and still shows "Club". */}
+            requested exception to the naming rule, scoped to the wordmark
+            lockup only (body copy elsewhere still says "Athlo Club"). */}
         <AthloClubWordmark href="/" showClub={false} />
 
         <div className="hidden items-center gap-[var(--space-7)] md:flex">
           <nav className="flex items-center gap-[var(--space-7)]">
             {links.map((l) => (
-              <Link
+              <NavLink
                 key={l.href}
                 href={l.href}
                 className="font-body text-athlo-body font-medium text-athlo-text-secondary transition-colors hover:text-athlo-text-primary"
               >
                 {l.label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
-          <ClubLoginLink />
+          <AthleteLoginLink />
         </div>
 
         <button
@@ -101,17 +120,17 @@ export default function MarketingNav() {
           <ul className="flex flex-col gap-[var(--space-4)]">
             {links.map((l) => (
               <li key={l.href}>
-                <Link
+                <NavLink
                   href={l.href}
                   onClick={() => setMenuOpen(false)}
                   className="block font-body text-athlo-body-lg font-medium text-athlo-text-primary"
                 >
                   {l.label}
-                </Link>
+                </NavLink>
               </li>
             ))}
             <li>
-              <ClubLoginLink className="w-fit" />
+              <AthleteLoginLink className="w-fit" />
             </li>
           </ul>
         </nav>
