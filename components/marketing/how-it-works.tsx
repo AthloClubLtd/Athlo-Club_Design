@@ -23,7 +23,7 @@ const ORGANISER_CARDS: CardContent[] = [
     title: "Fill your events without the ad spend.",
     label: "Fill your events",
     subtitle:
-      "Athlo puts your comp in front of athletes already searching, so you rely less on paid reach and your own channels.",
+      "Athletes already searching for their next competition find you here — no SEO spend, no separate events page to maintain. We bring the athletes to you.",
     alt: "Athlo Club map view showing nearby events and clubs pinned by location for targeted athlete discovery.",
     imageSrc: "/home/organiser-3.png",
   },
@@ -31,7 +31,7 @@ const ORGANISER_CARDS: CardContent[] = [
     title: "Get your weekend back.",
     label: "Get your weekend back",
     subtitle:
-      "Groupings, weight classes, flights and scoring handled automatically, so you're not rebuilding spreadsheets the night before.",
+      "5+ apps replaced by one, so you spend less time on admin and more time running your event.",
     alt: "Athlo Club create-event screen showing scoring templates for weightlifting, powerlifting and fitness racing.",
     imageSrc: "/home/organiser-1.png",
   },
@@ -39,7 +39,7 @@ const ORGANISER_CARDS: CardContent[] = [
     title: "Sell more tickets per event.",
     label: "Sell more tickets",
     subtitle:
-      "One flow for registration, tickets and payment means fewer drop-offs than a form and a bank transfer.",
+      "Registration, tickets, payment and scoring — run every event and competition, across every strength sport, on one platform.",
     alt: "Athlo Club club profile screen showing upcoming events with registration counts and a live competition.",
     imageSrc: "/home/organiser-2.png",
   },
@@ -127,7 +127,7 @@ export function HowItWorks() {
         role="tabpanel"
         id={`howitworks-panel-${activeTab.key}`}
         aria-labelledby={`howitworks-tab-${activeTab.key}`}
-        className="mt-[var(--space-8)] grid grid-cols-1 gap-[var(--space-6)] md:grid-cols-2 lg:grid-cols-3"
+        className="mt-[var(--space-8)] grid grid-cols-1 gap-[var(--space-9)] md:grid-cols-2 md:gap-[var(--space-8)] lg:grid-cols-3"
       >
         {activeTab.cards.map((card) => (
           <div key={card.title} className="text-center">
@@ -144,10 +144,10 @@ export function HowItWorks() {
             ) : (
               <ProductScreenshotPlaceholder alt={card.alt} label={card.label} />
             )}
-            <h3 className="mt-[var(--space-5)] font-display text-athlo-h2 font-bold text-athlo-accent-soft">
+            <h3 className="mt-[var(--space-6)] font-display text-athlo-h2 font-bold text-athlo-accent-soft">
               {card.title}
             </h3>
-            <p className="mt-[var(--space-2)] font-body text-athlo-body text-athlo-text-body">{card.subtitle}</p>
+            <p className="mt-[var(--space-4)] font-body text-athlo-body text-athlo-text-body">{card.subtitle}</p>
           </div>
         ))}
       </div>
