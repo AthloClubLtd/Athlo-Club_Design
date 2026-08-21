@@ -23,7 +23,8 @@ type MediaItem =
 // audio stripped (-an) — muted autoplay is required by browsers anyway, and
 // the brief asked for the audio gone regardless.
 // Order: the booking-event reel leads (shows the product before the
-// community stills), the second reel is woven in partway through the loop.
+// community stills); the second reel closes the loop after every still,
+// right before it cycles back to the booking reel.
 const DEFAULT_MEDIA: MediaItem[] = [
   {
     type: "video",
@@ -35,6 +36,10 @@ const DEFAULT_MEDIA: MediaItem[] = [
   { type: "image", src: "/assets/hero/frame-1.jpg" },
   { type: "image", src: "/assets/hero/frame-2.jpg" },
   { type: "image", src: "/assets/hero/frame-3.jpg" },
+  { type: "image", src: "/assets/hero/frame-4.jpg" },
+  { type: "image", src: "/assets/hero/frame-5.jpg" },
+  { type: "image", src: "/assets/hero/frame-6.jpg" },
+  { type: "image", src: "/assets/hero/frame-7.jpg" },
   {
     type: "video",
     sources: [
@@ -42,10 +47,6 @@ const DEFAULT_MEDIA: MediaItem[] = [
       { src: "/assets/hero/video-2.webm", type: "video/webm" },
     ],
   },
-  { type: "image", src: "/assets/hero/frame-4.jpg" },
-  { type: "image", src: "/assets/hero/frame-5.jpg" },
-  { type: "image", src: "/assets/hero/frame-6.jpg" },
-  { type: "image", src: "/assets/hero/frame-7.jpg" },
 ];
 
 export function HeroFlipbook({
