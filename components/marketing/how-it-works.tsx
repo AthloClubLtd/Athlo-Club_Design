@@ -20,49 +20,50 @@ type CardContent = {
 
 const ORGANISER_CARDS: CardContent[] = [
   {
-    title: "Unified events & scoring system",
-    label: "Unified events & scoring",
+    title: "Fill your events without the ad spend.",
+    label: "Fill your events",
     subtitle:
-      "Templates for weightlifting, powerlifting, fitness racing and Hyrox — or build your own scoring logic.",
+      "Athlo puts your comp in front of athletes already searching, so you rely less on paid reach and your own channels.",
+    alt: "Athlo Club map view showing nearby events and clubs pinned by location for targeted athlete discovery.",
+    imageSrc: "/home/organiser-3.png",
+  },
+  {
+    title: "Get your weekend back.",
+    label: "Get your weekend back",
+    subtitle:
+      "Groupings, weight classes, flights and scoring handled automatically, so you're not rebuilding spreadsheets the night before.",
     alt: "Athlo Club create-event screen showing scoring templates for weightlifting, powerlifting and fitness racing.",
     imageSrc: "/home/organiser-1.png",
   },
   {
-    title: "End-to-end event management",
-    label: "Event management",
+    title: "Sell more tickets per event.",
+    label: "Sell more tickets",
     subtitle:
-      "Ticketing, registration, athlete management, live leaderboards and results — the whole competition in one place.",
+      "One flow for registration, tickets and payment means fewer drop-offs than a form and a bank transfer.",
     alt: "Athlo Club club profile screen showing upcoming events with registration counts and a live competition.",
     imageSrc: "/home/organiser-2.png",
-  },
-  {
-    title: "Targeted athlete reach",
-    label: "Athlete reach",
-    subtitle: "Reach athletes matched by sport, skill level and location — not just whoever finds your Instagram.",
-    alt: "Athlo Club map view showing nearby events and clubs pinned by location for targeted athlete discovery.",
-    imageSrc: "/home/organiser-3.png",
   },
 ];
 
 const ATHLETE_CARDS: CardContent[] = [
   {
-    title: "Discover events, competitions & clubs near you",
-    label: "Discovery",
-    subtitle: "Find clubs, competitions and events near you, in your sport.",
+    title: "Find the right competition for you",
+    label: "Discover",
+    subtitle: "Matched to your sport, level, weight class and location — not just whoever's nearest.",
     alt: "Athlo Club app screen showing nearby strength events, competitions and clubs, filterable by sport and level.",
     imageSrc: "/home/athlete-1.jpg",
   },
   {
-    title: "Follow clubs to find and build your community",
-    label: "Community",
-    subtitle: "Follow the clubs you train with and stay in the loop on what they're running next.",
+    title: "Get rewarded for showing up",
+    label: "Rewards",
+    subtitle: "Enter events, try new sports and join clubs to unlock discounts and kit.",
     alt: "Athlo Club My Clubs screen showing a club the athlete created, and a list of followed clubs with member counts and new-activity notifications.",
     imageSrc: "/home/athlete-2.jpg",
   },
   {
-    title: "Track your progress and unlock offers",
-    label: "Progress",
-    subtitle: "Build your strength profile, earn badges and unlock new challenges, clubs and offers.",
+    title: "Build your athlete record",
+    label: "Your record",
+    subtitle: "Every result, PR and ranking across every strength sport, in one profile.",
     alt: "Athlo Club progress screen showing a strength profile percentage, earned challenges and badges.",
     imageSrc: "/home/athlete-3.jpg",
   },

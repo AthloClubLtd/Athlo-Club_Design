@@ -7,6 +7,7 @@ import { AboutBlock } from "@/components/marketing/about-block";
 import { ContainedImage } from "@/components/marketing/contained-image";
 import { ToolPills } from "@/components/marketing/tool-pills";
 import { HowItWorks } from "@/components/marketing/how-it-works";
+import { TractionStrip } from "@/components/marketing/traction-strip";
 import { FounderStory } from "@/components/marketing/founder-story";
 import { Mission } from "@/components/marketing/mission";
 import { LimeCTABand } from "@/components/marketing/lime-cta-band";
@@ -79,7 +80,7 @@ export default function Home() {
               Goodbye to <span className="text-athlo-lime">the patchwork.</span>
             </>
           }
-          subtitle="Everything you need to run your events, without the 5+ tabs."
+          subtitle="Eventbrite, spreadsheets, WhatsApp groups, a scoring app, and ad spend that never reaches the right athletes — replaced by one platform."
           imageSide="left"
           image={
             <ContainedImage
@@ -95,6 +96,11 @@ export default function Home() {
       {/* §4 How it works */}
       <div className="px-[var(--gutter)] py-[var(--space-9)]">
         <HowItWorks />
+      </div>
+
+      {/* §4b Traction */}
+      <div className="mx-auto max-w-[var(--container-wide)] px-[var(--gutter)] pb-[var(--space-9)]">
+        <TractionStrip />
       </div>
 
       {/* §5 Built by (founder story) */}
