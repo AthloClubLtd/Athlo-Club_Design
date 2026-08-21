@@ -228,7 +228,8 @@ export function HeroFlipbook({
     >
       {media.map((item, i) => {
         const isActive = loaded && i === displayIndex;
-        const sharedClassName = `site-photo pointer-events-none absolute inset-0 h-full w-full object-cover ${
+        // .flipbook-frame crossfades the opacity swap below — see globals.css.
+        const sharedClassName = `site-photo flipbook-frame pointer-events-none absolute inset-0 h-full w-full object-cover ${
           touchRevealed ? "is-revealed" : ""
         }`.trim();
         const sharedStyle = { opacity: isActive ? 1 : 0 };
@@ -255,7 +256,6 @@ export function HeroFlipbook({
         }
 
         return (
-          // Hard opacity cut (no CSS transition) — fast-cut film, not a fading slideshow.
           <img
             key={item.src}
             src={item.src}

@@ -57,6 +57,15 @@ body {
   transition: filter 0.5s ease, transform 0.5s ease;
 }
 
+/* Hero flipbook only (components/marketing/hero-flipbook.tsx): crossfades
+   the stacked frames instead of the hard opacity cut the original "fast-cut
+   film" brief called for. Mixing in video frames made the hard cut read as
+   a jump rather than a cut, so this softens every transition — image or
+   video — without touching .site-photo's hard-cut default used elsewhere. */
+.flipbook-frame {
+  transition: opacity 0.4s ease-in-out;
+}
+
 /* Pointer devices: hover reveals full colour with a very subtle lift.
    Gated on (hover: hover) so touch devices — which have no hover state —
    don't get stuck showing grey, per the .is-revealed rule below instead. */
@@ -84,6 +93,9 @@ body {
   .site-photo.is-revealed,
   .photo-hover-area:hover .site-photo {
     transform: none;
+  }
+  .flipbook-frame {
+    transition: none;
   }
 }
 
