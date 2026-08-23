@@ -12,10 +12,15 @@ type CardContent = {
   subtitle: string;
   alt: string;
   /** Real screenshot, when one exists — cards without it keep rendering
-   * ProductScreenshotPlaceholder unchanged. All six current cards' images
-   * share the same 1092x2475 ratio, hence the shared literal
-   * ratioClassName below. */
+   * ProductScreenshotPlaceholder unchanged. */
   imageSrc?: string;
+  /** Literal Tailwind aspect-ratio class — organiser cards are composed
+   * 4:5 graphics, athlete cards are raw 1092x2475 phone screenshots, so
+   * this varies per card rather than being one shared constant. Must stay
+   * a literal string (not built from card.width/height) — the Tailwind JIT
+   * scanner is static-text-only and won't see a template-interpolated
+   * class. */
+  ratioClassName: string;
 };
 
 const ORGANISER_CARDS: CardContent[] = [
@@ -24,21 +29,24 @@ const ORGANISER_CARDS: CardContent[] = [
     label: "Fill your events",
     subtitle: "No SEO spend, no events page to maintain — we bring the athletes to you.",
     alt: "Athlo Club map view showing nearby events and clubs pinned by location for targeted athlete discovery.",
-    imageSrc: "/home/organiser-3.png",
+    imageSrc: "/home/organiser-1.png",
+    ratioClassName: "aspect-[4/5]",
   },
   {
     title: "Get your weekend back.",
     label: "Get your weekend back",
     subtitle: "5+ apps replaced by one — fewer admin hours, more weekend.",
-    alt: "Athlo Club create-event screen showing scoring templates for weightlifting, powerlifting and fitness racing.",
-    imageSrc: "/home/organiser-1.png",
+    alt: "Athlo Club create-event screen with the tools it replaces — Runna, WhatsApp, Excel, owlcms and Mailchimp — converging into one platform.",
+    imageSrc: "/home/organiser-2.png",
+    ratioClassName: "aspect-[4/5]",
   },
   {
     title: "Sell more tickets per event.",
     label: "Sell more tickets",
     subtitle: "One flow for registration, tickets and payment — across every strength sport.",
-    alt: "Athlo Club club profile screen showing upcoming events with registration counts and a live competition.",
-    imageSrc: "/home/organiser-2.png",
+    alt: "Athlo Club event screen for the BPF Powerlifting Open, showing who's going, an unlockable reward, spots remaining and a one-tap £35 registration button.",
+    imageSrc: "/home/organiser-3.png",
+    ratioClassName: "aspect-[4/5]",
   },
 ];
 
@@ -49,6 +57,7 @@ const ATHLETE_CARDS: CardContent[] = [
     subtitle: "Matched to your sport, level, weight class and location — not just whoever's nearest.",
     alt: "Athlo Club app screen showing nearby strength events, competitions and clubs, filterable by sport and level.",
     imageSrc: "/home/athlete-1.jpg",
+    ratioClassName: "aspect-[1092/2475]",
   },
   {
     title: "Get rewarded for showing up",
@@ -56,6 +65,7 @@ const ATHLETE_CARDS: CardContent[] = [
     subtitle: "Enter events, try new sports and join clubs to unlock discounts and kit.",
     alt: "Athlo Club My Clubs screen showing a club the athlete created, and a list of followed clubs with member counts and new-activity notifications.",
     imageSrc: "/home/athlete-2.jpg",
+    ratioClassName: "aspect-[1092/2475]",
   },
   {
     title: "Build your athlete record",
@@ -63,6 +73,7 @@ const ATHLETE_CARDS: CardContent[] = [
     subtitle: "Every result, PR and ranking across every strength sport, in one profile.",
     alt: "Athlo Club progress screen showing a strength profile percentage, earned challenges and badges.",
     imageSrc: "/home/athlete-3.jpg",
+    ratioClassName: "aspect-[1092/2475]",
   },
 ];
 
@@ -132,13 +143,13 @@ export function HowItWorks() {
         {activeTab.cards.map((card) => (
           <div key={card.title} className="text-center">
             {card.imageSrc ? (
-              // max-w caps it on wide desktop columns so a 2475px-tall
-              // screenshot doesn't dominate the row; below that it scales
-              // down with the grid column on its own.
+              // max-w caps it on wide desktop columns so a tall screenshot
+              // doesn't dominate the row; below that it scales down with
+              // the grid column on its own.
               <ContainedImage
                 src={card.imageSrc}
                 alt={card.alt}
-                ratioClassName="aspect-[1092/2475]"
+                ratioClassName={card.ratioClassName}
                 className="mx-auto max-w-[300px]"
               />
             ) : (
