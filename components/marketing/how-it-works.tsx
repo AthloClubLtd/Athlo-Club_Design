@@ -144,25 +144,32 @@ export function HowItWorks() {
         className="mt-[var(--space-8)] grid grid-cols-1 gap-[var(--space-9)] lg:grid-cols-3 lg:gap-[var(--space-8)]"
       >
         {activeTab.cards.map((card) => (
-          <div key={card.title} className="text-center">
-            {card.imageSrc ? (
-              // max-w caps it at roughly the lg column width so it doesn't
-              // overflow the card at wide viewports; below that it scales
-              // down with the grid column on its own. Was 300px — bumped up
-              // now that the section sits in the same container-wide wrapper
-              // as every other section (it didn't before, which is also why
-              // these looked small: columns could stretch past 500px wide on
-              // large screens, leaving the fixed-width image swimming in
-              // empty space either side).
-              <ContainedImage
-                src={card.imageSrc}
-                alt={card.alt}
-                ratioClassName={card.ratioClassName}
-                className="mx-auto max-w-[360px]"
-              />
-            ) : (
-              <ProductScreenshotPlaceholder alt={card.alt} label={card.label} />
-            )}
+          <div key={card.title} className="flex h-full flex-col text-center">
+            {/* flex-1 absorbs the row's leftover height — cards' images
+                aren't all the same aspect ratio (organiser cards are 4:5,
+                athlete cards are cropped to different heights per card), so
+                without this the title/subtitle would start at a different
+                y per column instead of lining up across the row. */}
+            <div className="flex-1">
+              {card.imageSrc ? (
+                // max-w caps it at roughly the lg column width so it doesn't
+                // overflow the card at wide viewports; below that it scales
+                // down with the grid column on its own. Was 300px — bumped up
+                // now that the section sits in the same container-wide wrapper
+                // as every other section (it didn't before, which is also why
+                // these looked small: columns could stretch past 500px wide on
+                // large screens, leaving the fixed-width image swimming in
+                // empty space either side).
+                <ContainedImage
+                  src={card.imageSrc}
+                  alt={card.alt}
+                  ratioClassName={card.ratioClassName}
+                  className="mx-auto max-w-[360px]"
+                />
+              ) : (
+                <ProductScreenshotPlaceholder alt={card.alt} label={card.label} />
+              )}
+            </div>
             <h3 className="mt-[var(--space-6)] font-display text-athlo-h2 font-bold text-athlo-accent-soft">
               {card.title}
             </h3>
