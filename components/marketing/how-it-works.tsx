@@ -124,7 +124,10 @@ export function HowItWorks() {
         role="tabpanel"
         id={`howitworks-panel-${activeTab.key}`}
         aria-labelledby={`howitworks-tab-${activeTab.key}`}
-        className="mt-[var(--space-8)] grid grid-cols-1 gap-[var(--space-9)] md:grid-cols-2 md:gap-[var(--space-8)] lg:grid-cols-3"
+        // Stays single-column through md — a 2-up grid orphans the third
+        // card alone on its own row with an empty gap beside it — and jumps
+        // straight to 3 columns at lg, where there's room for all three.
+        className="mt-[var(--space-8)] grid grid-cols-1 gap-[var(--space-9)] lg:grid-cols-3 lg:gap-[var(--space-8)]"
       >
         {activeTab.cards.map((card) => (
           <div key={card.title} className="text-center">
