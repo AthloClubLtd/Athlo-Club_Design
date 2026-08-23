@@ -94,7 +94,7 @@ export default function Home() {
       </div>
 
       {/* §4 How it works */}
-      <div className="px-[var(--gutter)] py-[var(--space-9)]">
+      <div className="mx-auto max-w-[var(--container-wide)] px-[var(--gutter)] py-[var(--space-9)]">
         <HowItWorks />
       </div>
 

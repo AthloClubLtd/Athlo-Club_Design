@@ -55,25 +55,28 @@ const ATHLETE_CARDS: CardContent[] = [
     title: "Find the right competition for you",
     label: "Discover",
     subtitle: "Matched to your sport, level, weight class and location — not just whoever's nearest.",
-    alt: "Athlo Club app screen showing nearby strength events, competitions and clubs, filterable by sport and level.",
+    alt: "Athlo Club Discover screen showing nearby strength events — Weekend Warrior WOD and Deadlift Club — with distance, going count and price.",
     imageSrc: "/home/athlete-1.jpg",
-    ratioClassName: "aspect-[1092/2475]",
+    // Cropped from the full 1092x2475 screenshot down to the nav, search,
+    // filters and two event cards — the long tail of the scrollable list
+    // added height without adding anything legible at thumbnail size.
+    ratioClassName: "aspect-[1092/1890]",
   },
   {
     title: "Get rewarded for showing up",
     label: "Rewards",
     subtitle: "Enter events, try new sports and join clubs to unlock discounts and kit.",
-    alt: "Athlo Club My Clubs screen showing a club the athlete created, and a list of followed clubs with member counts and new-activity notifications.",
+    alt: "Athlo Club My Clubs screen showing a club the athlete created and a followed club with a new-event notification.",
     imageSrc: "/home/athlete-2.jpg",
-    ratioClassName: "aspect-[1092/2475]",
+    ratioClassName: "aspect-[1092/1770]",
   },
   {
     title: "Build your athlete record",
     label: "Your record",
     subtitle: "Every result, PR and ranking across every strength sport, in one profile.",
-    alt: "Athlo Club progress screen showing a strength profile percentage, earned challenges and badges.",
+    alt: "Athlo Club profile screen showing follower/event stats and a strength progress ring at 82% intermediate.",
     imageSrc: "/home/athlete-3.jpg",
-    ratioClassName: "aspect-[1092/2475]",
+    ratioClassName: "aspect-[1092/1200]",
   },
 ];
 
@@ -143,14 +146,19 @@ export function HowItWorks() {
         {activeTab.cards.map((card) => (
           <div key={card.title} className="text-center">
             {card.imageSrc ? (
-              // max-w caps it on wide desktop columns so a tall screenshot
-              // doesn't dominate the row; below that it scales down with
-              // the grid column on its own.
+              // max-w caps it at roughly the lg column width so it doesn't
+              // overflow the card at wide viewports; below that it scales
+              // down with the grid column on its own. Was 300px — bumped up
+              // now that the section sits in the same container-wide wrapper
+              // as every other section (it didn't before, which is also why
+              // these looked small: columns could stretch past 500px wide on
+              // large screens, leaving the fixed-width image swimming in
+              // empty space either side).
               <ContainedImage
                 src={card.imageSrc}
                 alt={card.alt}
                 ratioClassName={card.ratioClassName}
-                className="mx-auto max-w-[300px]"
+                className="mx-auto max-w-[360px]"
               />
             ) : (
               <ProductScreenshotPlaceholder alt={card.alt} label={card.label} />
