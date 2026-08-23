@@ -22,24 +22,21 @@ const ORGANISER_CARDS: CardContent[] = [
   {
     title: "Fill your events without the ad spend.",
     label: "Fill your events",
-    subtitle:
-      "Athletes already searching for their next competition find you here — no SEO spend, no separate events page to maintain. We bring the athletes to you.",
+    subtitle: "No SEO spend, no events page to maintain — we bring the athletes to you.",
     alt: "Athlo Club map view showing nearby events and clubs pinned by location for targeted athlete discovery.",
     imageSrc: "/home/organiser-3.png",
   },
   {
     title: "Get your weekend back.",
     label: "Get your weekend back",
-    subtitle:
-      "5+ apps replaced by one, so you spend less time on admin and more time running your event.",
+    subtitle: "5+ apps replaced by one — fewer admin hours, more weekend.",
     alt: "Athlo Club create-event screen showing scoring templates for weightlifting, powerlifting and fitness racing.",
     imageSrc: "/home/organiser-1.png",
   },
   {
     title: "Sell more tickets per event.",
     label: "Sell more tickets",
-    subtitle:
-      "Registration, tickets, payment and scoring — run every event and competition, across every strength sport, on one platform.",
+    subtitle: "One flow for registration, tickets and payment — across every strength sport.",
     alt: "Athlo Club club profile screen showing upcoming events with registration counts and a live competition.",
     imageSrc: "/home/organiser-2.png",
   },
