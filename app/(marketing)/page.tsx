@@ -98,8 +98,14 @@ export default function Home() {
         <HowItWorks />
       </div>
 
-      {/* §4b Traction */}
-      <div className="mx-auto max-w-[var(--container-wide)] px-[var(--gutter)] pb-[var(--space-9)]">
+      {/* §4b Traction — bordered band (not a lime fill: brand law 1 reserves
+          lime as a background for the one final CTA band only) gives it
+          the same visual distinction as the "Trusted by" band up top.
+          py- both sides (not pb- only) keeps the gap either side of this
+          section consistent with the 96px+96px rhythm every other section
+          uses — it was pb-only before, which halved the gap above it
+          against the gap below. */}
+      <div className="border-y border-athlo-line-subtle px-[var(--gutter)] py-[var(--space-9)]">
         <TractionStrip />
       </div>
 

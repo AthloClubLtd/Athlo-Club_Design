@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import { SectionLabel } from "@/components/marketing/ui/section-label";
-import { Button } from "@/components/marketing/ui/button";
 import { ProductScreenshotPlaceholder } from "@/components/marketing/product-screenshot-placeholder";
 import { ContainedImage } from "@/components/marketing/contained-image";
 
@@ -14,13 +13,19 @@ type CardContent = {
   /** Real screenshot, when one exists — cards without it keep rendering
    * ProductScreenshotPlaceholder unchanged. */
   imageSrc?: string;
-  /** Literal Tailwind aspect-ratio class — organiser cards are composed
-   * 4:5 graphics, athlete cards are raw 1092x2475 phone screenshots, so
-   * this varies per card rather than being one shared constant. Must stay
-   * a literal string (not built from card.width/height) — the Tailwind JIT
-   * scanner is static-text-only and won't see a template-interpolated
-   * class. */
+  /** Literal Tailwind aspect-ratio class. All six cards currently share
+   * aspect-[4/5] — titles rely on that to start at the same y across a
+   * row (see the image wrapper below), so if a future image swap needs a
+   * different ratio for one card, the wrapper needs a fixed height again,
+   * not just this. Must stay a literal string (not built from
+   * card.width/height) — the Tailwind JIT scanner is static-text-only and
+   * won't see a template-interpolated class. */
   ratioClassName: string;
+  /** Constrains the title's wrap width — only "Build your athlete record"
+   * needs this, to force it onto 2 lines and match its siblings' rhythm
+   * (it's short enough to fit on 1 line at the card's natural width,
+   * which left it visually shorter than the other cards in its row). */
+  titleClassName?: string;
 };
 
 const ORGANISER_CARDS: CardContent[] = [
@@ -74,6 +79,7 @@ const ATHLETE_CARDS: CardContent[] = [
     alt: "Athlo Club profile screen showing a BWL-verified weightlifting result card with snatch, clean & jerk, Sinclair score and total.",
     imageSrc: "/home/athlete-3.jpg",
     ratioClassName: "aspect-[4/5]",
+    titleClassName: "max-w-[220px] mx-auto",
   },
 ];
 
@@ -141,44 +147,36 @@ export function HowItWorks() {
         className="mt-[var(--space-8)] grid grid-cols-1 gap-[var(--space-9)] lg:grid-cols-3 lg:gap-[var(--space-8)]"
       >
         {activeTab.cards.map((card) => (
-          <div key={card.title} className="flex h-full flex-col text-center">
-            {/* flex-1 absorbs the row's leftover height — cards' images
-                aren't all the same aspect ratio (organiser cards are 4:5,
-                athlete cards are cropped to different heights per card), so
-                without this the title/subtitle would start at a different
-                y per column instead of lining up across the row. */}
-            <div className="flex-1">
-              {card.imageSrc ? (
-                // max-w caps it at roughly the lg column width so it doesn't
-                // overflow the card at wide viewports; below that it scales
-                // down with the grid column on its own. Was 300px — bumped up
-                // now that the section sits in the same container-wide wrapper
-                // as every other section (it didn't before, which is also why
-                // these looked small: columns could stretch past 500px wide on
-                // large screens, leaving the fixed-width image swimming in
-                // empty space either side).
-                <ContainedImage
-                  src={card.imageSrc}
-                  alt={card.alt}
-                  ratioClassName={card.ratioClassName}
-                  className="mx-auto max-w-[360px]"
-                />
-              ) : (
-                <ProductScreenshotPlaceholder alt={card.alt} label={card.label} />
-              )}
-            </div>
-            <h3 className="mt-[var(--space-6)] font-display text-athlo-h2 font-bold text-athlo-accent-soft">
+          <div key={card.title} className="text-center">
+            {card.imageSrc ? (
+              // max-w caps it at roughly the lg column width so it doesn't
+              // overflow the card at wide viewports; below that it scales
+              // down with the grid column on its own. Was 300px — bumped up
+              // now that the section sits in the same container-wide wrapper
+              // as every other section (it didn't before, which is also why
+              // these looked small: columns could stretch past 500px wide on
+              // large screens, leaving the fixed-width image swimming in
+              // empty space either side). Every card shares one aspect ratio
+              // (see ratioClassName's comment above), so images render at
+              // the same height and titles below them start at the same y
+              // with no extra alignment plumbing needed.
+              <ContainedImage
+                src={card.imageSrc}
+                alt={card.alt}
+                ratioClassName={card.ratioClassName}
+                className="mx-auto max-w-[360px]"
+              />
+            ) : (
+              <ProductScreenshotPlaceholder alt={card.alt} label={card.label} />
+            )}
+            <h3
+              className={`mt-[var(--space-6)] font-display text-athlo-h2 font-bold text-athlo-accent-soft ${card.titleClassName ?? ""}`.trim()}
+            >
               {card.title}
             </h3>
             <p className="mt-[var(--space-4)] font-body text-athlo-body text-athlo-text-body">{card.subtitle}</p>
           </div>
         ))}
-      </div>
-
-      <div className="mt-[var(--space-7)] text-center">
-        <Button href="/playground" variant="ghost">
-          Check out the demo →
-        </Button>
       </div>
     </section>
   );
