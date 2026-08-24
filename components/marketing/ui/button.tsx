@@ -38,6 +38,17 @@ export function Button({
     );
   }
 
+  // mailto:/tel: aren't routes — next/link's client-side router doesn't
+  // handle these schemes, so they need a plain anchor too. No target/rel
+  // here: they don't open a new tab, they hand off to the OS mail/phone app.
+  if (href.startsWith("mailto:") || href.startsWith("tel:")) {
+    return (
+      <a href={href} className={`${variantClasses[variant]} ${className}`.trim()}>
+        {children}
+      </a>
+    );
+  }
+
   return (
     <Link href={href} className={`${variantClasses[variant]} ${className}`.trim()}>
       {children}

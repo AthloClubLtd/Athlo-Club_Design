@@ -35,7 +35,7 @@ function NavLink({ href, className, onClick, children }: { href: string; classNa
 function AthleteLoginLink({ className = "" }: { className?: string }) {
   return (
     <Link
-      href="/login"
+      href="/athlete-login"
       className={`flex items-center gap-[var(--space-2)] rounded-athlo-md border border-athlo-line-strong px-[var(--space-4)] py-[var(--space-2)] font-body font-semibold text-athlo-text-primary transition-colors hover:border-athlo-text-secondary ${className}`.trim()}
     >
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">

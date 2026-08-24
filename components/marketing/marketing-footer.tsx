@@ -5,7 +5,7 @@ const navLinks = [
   { href: "/discover", label: "Discover events" },
   { href: "/playground", label: "Playground" },
   { href: "https://form.typeform.com/to/G77nDjXy", label: "Investor enquiries" },
-  { href: "/login", label: "Athlete login" },
+  { href: "/athlete-login", label: "Athlete login" },
 ];
 
 const PRIVACY_TERMS_URL =
