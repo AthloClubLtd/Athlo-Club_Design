@@ -6,7 +6,6 @@ import { AthloClubWordmark } from "@/components/marketing/ui/athlo-club-wordmark
 
 const links = [
   { href: "/discover", label: "Discover events" },
-  { href: "/playground", label: "Playground" },
   { href: "https://form.typeform.com/to/G77nDjXy", label: "Investor enquiries" },
 ];
 

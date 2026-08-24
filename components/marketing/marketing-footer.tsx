@@ -3,7 +3,6 @@ import { AthloClubWordmark } from "@/components/marketing/ui/athlo-club-wordmark
 
 const navLinks = [
   { href: "/discover", label: "Discover events" },
-  { href: "/playground", label: "Playground" },
   { href: "https://form.typeform.com/to/G77nDjXy", label: "Investor enquiries" },
   { href: "/athlete-login", label: "Athlete login" },
 ];
