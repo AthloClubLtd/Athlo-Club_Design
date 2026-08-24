@@ -55,28 +55,25 @@ const ATHLETE_CARDS: CardContent[] = [
     title: "Find the right competition for you",
     label: "Discover",
     subtitle: "Matched to your sport, level, weight class and location — not just whoever's nearest.",
-    alt: "Athlo Club Discover screen showing nearby strength events — Weekend Warrior WOD and Deadlift Club — with distance, going count and price.",
+    alt: "Athlo Club Discover screen showing nearby strength events with sport and community tags — Snatch it, HYROX ready, Strong Girls Lift, Deadlift Club — matched to the athlete.",
     imageSrc: "/home/athlete-1.jpg",
-    // Cropped from the full 1092x2475 screenshot down to the nav, search,
-    // filters and two event cards — the long tail of the scrollable list
-    // added height without adding anything legible at thumbnail size.
-    ratioClassName: "aspect-[1092/1890]",
+    ratioClassName: "aspect-[4/5]",
   },
   {
     title: "Get rewarded for showing up",
     label: "Rewards",
     subtitle: "Enter events, try new sports and join clubs to unlock discounts and kit.",
-    alt: "Athlo Club My Clubs screen showing a club the athlete created and a followed club with a new-event notification.",
+    alt: "Athlo Club recommended-challenges screen showing event-attendance progress bars unlocking discounts, zero platform fees and free merch, plus a badges row.",
     imageSrc: "/home/athlete-2.jpg",
-    ratioClassName: "aspect-[1092/1770]",
+    ratioClassName: "aspect-[4/5]",
   },
   {
     title: "Build your athlete record",
     label: "Your record",
     subtitle: "Every result, PR and ranking across every strength sport, in one profile.",
-    alt: "Athlo Club profile screen showing follower/event stats and a strength progress ring at 82% intermediate.",
+    alt: "Athlo Club profile screen showing a BWL-verified weightlifting result card with snatch, clean & jerk, Sinclair score and total.",
     imageSrc: "/home/athlete-3.jpg",
-    ratioClassName: "aspect-[1092/1200]",
+    ratioClassName: "aspect-[4/5]",
   },
 ];
 
